@@ -102,10 +102,12 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/12/7-12/index.html">
 <meta property="og:site_name" content="GBW's Blog">
 <meta property="og:description" content="统计平均年龄首先生成数据：Gen.scala生成1000000个人的0-99年龄每一行 i + rand(100)12345678910111213141516171819202122/**  * Created by gbw on 16-7-10.  */import java.io.FileWriterimport java.io.Fileimport scala.util.Randomobj">
-<meta property="og:updated_time" content="2016-07-12T02:52:23.030Z">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2010:57:39%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
+<meta property="og:updated_time" content="2016-07-12T03:00:40.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7.12">
 <meta name="twitter:description" content="统计平均年龄首先生成数据：Gen.scala生成1000000个人的0-99年龄每一行 i + rand(100)12345678910111213141516171819202122/**  * Created by gbw on 16-7-10.  */import java.io.FileWriterimport java.io.Fileimport scala.util.Randomobj">
+<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2010:57:39%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
 
 
 
@@ -305,6 +307,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-submit --class AvgAgeCalculator --master spark://localhost:7077 /home/gbw/SparkPropleAge.jar hdfs://localhost:9000/gbw/input/sample_age_data.txt</div></pre></td></tr></table></figure>
 <p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Total Age:49492650;Number of People:1000000</div><div class="line">Average Age is 49.49265</div></pre></td></tr></table></figure></p>
 <p>写到屏幕好使，但是写回hdfs不知道为什么不行，只能写rdd,Double不知道为啥写不了</p>
+<p>我的集群：<br>外链图片使用 七牛云存储<br><img src="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2010:57:39%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"></p>
 
       
     </div>
