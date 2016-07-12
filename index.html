@@ -260,6 +260,108 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/12/7-12-2/" itemprop="url">
+                  7-12-2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-12T13:31:00+08:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>##SparkStreaming<br>终于搞定了Demo<br>生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.&#123;<span class="type">PrintWriter</span>&#125;</div><div class="line"><span class="keyword">import</span> java.net.<span class="type">ServerSocket</span></div><div class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="comment">// 定义随机获取整数的方法</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span></span>(length: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">import</span> java.util.<span class="type">Random</span></div><div class="line">		<span class="keyword">val</span> rdm = <span class="keyword">new</span> <span class="type">Random</span></div><div class="line">		rdm.nextInt(length)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line"></div><div class="line">		<span class="comment">// 调用该模拟器需要三个参数，分为为文件路径、端口号和间隔时间（单位：毫秒）</span></div><div class="line">		<span class="keyword">if</span> (args.length != <span class="number">3</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.println(<span class="string">"Usage: &lt;filename&gt; &lt;port&gt; &lt;millisecond&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 获取指定文件总的行数</span></div><div class="line">		<span class="keyword">val</span> filename = args(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> lines = <span class="type">Source</span>.fromFile(filename).getLines.toList</div><div class="line">		<span class="keyword">val</span> filerow = lines.length</div><div class="line"></div><div class="line">		<span class="comment">// 指定监听某端口，当外部程序请求时建立连接</span></div><div class="line">		<span class="keyword">val</span> listener = <span class="keyword">new</span> <span class="type">ServerSocket</span>(args(<span class="number">1</span>).toInt)</div><div class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">val</span> socket = listener.accept()</div><div class="line">			<span class="keyword">new</span> <span class="type">Thread</span>()</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span> </span>=</div><div class="line">				&#123;</div><div class="line">					println(<span class="string">"Got client connected from: "</span> + socket.getInetAddress)</div><div class="line">					<span class="keyword">val</span> out = <span class="keyword">new</span> <span class="type">PrintWriter</span>(socket.getOutputStream, <span class="literal">true</span>)</div><div class="line">					<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">					&#123;</div><div class="line">						<span class="type">Thread</span>.sleep(args(<span class="number">2</span>).toLong)</div><div class="line">						<span class="comment">// 当该端口接受请求时，随机获取某行数据发送给对方</span></div><div class="line">						<span class="keyword">val</span> content = lines(index(filerow))</div><div class="line">						println(content)</div><div class="line">						out.write(content + '\n')</div><div class="line">						out.flush()</div><div class="line">					&#125;</div><div class="line">					socket.close()</div><div class="line">				&#125;</div><div class="line">			&#125;.start()</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行</p>
+<pre><code>java -jar SparkStreamingGenData.jar  /home/gbw/peoplext 9999 1000
+</code></pre><p>SparkStreaming 程序<br>没10秒，统计数据，输出到屏幕上</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">Milliseconds</span>, <span class="type">Seconds</span>, <span class="type">StreamingContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.streaming.<span class="type">StreamingContext</span>._</div><div class="line"><span class="keyword">import</span> org.apache.spark.storage.<span class="type">StorageLevel</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) </div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"NetworkWordCount"</span>).setMaster(<span class="string">"local[2]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(sc, <span class="type">Seconds</span>(<span class="number">20</span>))</div><div class="line"></div><div class="line">		<span class="comment">// 通过Socket获取数据，该处需要提供Socket的主机名和端口号，数据保存在内存和硬盘中</span></div><div class="line">		<span class="keyword">val</span> lines = ssc.socketTextStream(args(<span class="number">0</span>), args(<span class="number">1</span>).toInt, <span class="type">StorageLevel</span>.<span class="type">MEMORY_AND_DISK_SER</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 对读入的数据进行分割、计数</span></div><div class="line">		<span class="keyword">val</span> words = lines.flatMap(_.split(<span class="string">","</span>))</div><div class="line">		<span class="keyword">val</span> wordCounts = words.map(x =&gt; (x, <span class="number">1</span>)).reduceByKey(_ + _)</div><div class="line"></div><div class="line">		wordCounts.print()</div><div class="line">		ssc.start()</div><div class="line">		ssc.awaitTermination()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行：</p>
+<pre><code>gbw@gbw-Inspiron-3537:~/spark-1.6.2/bin$ ./spark-submit --class WordCount --master spark://localhost:7077 /home/gbw/SparkStreamingWordCount.jar localhost 9999
+</code></pre><p>结果：<br>从People中随机取数据输入Spark程序，Spark每10s统计结果并输出<br><img src="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2013:22:06%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/12/7-12/" itemprop="url">
                   7.12
                 </a>
@@ -1045,7 +1147,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">9</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

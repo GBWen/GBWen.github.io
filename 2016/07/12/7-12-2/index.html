@@ -1,0 +1,629 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="##SparkStreaming终于搞定了Demo生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556import java.io.&amp;#123;PrintWriter&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7-12-2">
+<meta property="og:url" content="http://yoursite.com/2016/07/12/7-12-2/index.html">
+<meta property="og:site_name" content="GBW's Blog">
+<meta property="og:description" content="##SparkStreaming终于搞定了Demo生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556import java.io.&amp;#123;PrintWriter&amp;#125;">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2013:22:06%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
+<meta property="og:updated_time" content="2016-07-12T05:40:19.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7-12-2">
+<meta name="twitter:description" content="##SparkStreaming终于搞定了Demo生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556import java.io.&amp;#123;PrintWriter&amp;#125;">
+<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2013:22:06%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/12/7-12-2/"/>
+
+  <title> 7-12-2 | GBW's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GBW's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Write 1000 Lines a Day to Change My Life!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                7-12-2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-12T13:31:00+08:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##SparkStreaming<br>终于搞定了Demo<br>生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.&#123;<span class="type">PrintWriter</span>&#125;</div><div class="line"><span class="keyword">import</span> java.net.<span class="type">ServerSocket</span></div><div class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="comment">// 定义随机获取整数的方法</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span></span>(length: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">import</span> java.util.<span class="type">Random</span></div><div class="line">		<span class="keyword">val</span> rdm = <span class="keyword">new</span> <span class="type">Random</span></div><div class="line">		rdm.nextInt(length)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line"></div><div class="line">		<span class="comment">// 调用该模拟器需要三个参数，分为为文件路径、端口号和间隔时间（单位：毫秒）</span></div><div class="line">		<span class="keyword">if</span> (args.length != <span class="number">3</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.println(<span class="string">"Usage: &lt;filename&gt; &lt;port&gt; &lt;millisecond&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 获取指定文件总的行数</span></div><div class="line">		<span class="keyword">val</span> filename = args(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> lines = <span class="type">Source</span>.fromFile(filename).getLines.toList</div><div class="line">		<span class="keyword">val</span> filerow = lines.length</div><div class="line"></div><div class="line">		<span class="comment">// 指定监听某端口，当外部程序请求时建立连接</span></div><div class="line">		<span class="keyword">val</span> listener = <span class="keyword">new</span> <span class="type">ServerSocket</span>(args(<span class="number">1</span>).toInt)</div><div class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">val</span> socket = listener.accept()</div><div class="line">			<span class="keyword">new</span> <span class="type">Thread</span>()</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span> </span>=</div><div class="line">				&#123;</div><div class="line">					println(<span class="string">"Got client connected from: "</span> + socket.getInetAddress)</div><div class="line">					<span class="keyword">val</span> out = <span class="keyword">new</span> <span class="type">PrintWriter</span>(socket.getOutputStream, <span class="literal">true</span>)</div><div class="line">					<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">					&#123;</div><div class="line">						<span class="type">Thread</span>.sleep(args(<span class="number">2</span>).toLong)</div><div class="line">						<span class="comment">// 当该端口接受请求时，随机获取某行数据发送给对方</span></div><div class="line">						<span class="keyword">val</span> content = lines(index(filerow))</div><div class="line">						println(content)</div><div class="line">						out.write(content + '\n')</div><div class="line">						out.flush()</div><div class="line">					&#125;</div><div class="line">					socket.close()</div><div class="line">				&#125;</div><div class="line">			&#125;.start()</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行</p>
+<pre><code>java -jar SparkStreamingGenData.jar  /home/gbw/peoplext 9999 1000
+</code></pre><p>SparkStreaming 程序<br>没10秒，统计数据，输出到屏幕上</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.streaming.&#123;<span class="type">Milliseconds</span>, <span class="type">Seconds</span>, <span class="type">StreamingContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.streaming.<span class="type">StreamingContext</span>._</div><div class="line"><span class="keyword">import</span> org.apache.spark.storage.<span class="type">StorageLevel</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span> </span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) </div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"NetworkWordCount"</span>).setMaster(<span class="string">"local[2]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> ssc = <span class="keyword">new</span> <span class="type">StreamingContext</span>(sc, <span class="type">Seconds</span>(<span class="number">20</span>))</div><div class="line"></div><div class="line">		<span class="comment">// 通过Socket获取数据，该处需要提供Socket的主机名和端口号，数据保存在内存和硬盘中</span></div><div class="line">		<span class="keyword">val</span> lines = ssc.socketTextStream(args(<span class="number">0</span>), args(<span class="number">1</span>).toInt, <span class="type">StorageLevel</span>.<span class="type">MEMORY_AND_DISK_SER</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 对读入的数据进行分割、计数</span></div><div class="line">		<span class="keyword">val</span> words = lines.flatMap(_.split(<span class="string">","</span>))</div><div class="line">		<span class="keyword">val</span> wordCounts = words.map(x =&gt; (x, <span class="number">1</span>)).reduceByKey(_ + _)</div><div class="line"></div><div class="line">		wordCounts.print()</div><div class="line">		ssc.start()</div><div class="line">		ssc.awaitTermination()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行：</p>
+<pre><code>gbw@gbw-Inspiron-3537:~/spark-1.6.2/bin$ ./spark-submit --class WordCount --master spark://localhost:7077 /home/gbw/SparkStreamingWordCount.jar localhost 9999
+</code></pre><p>结果：<br>从People中随机取数据输入Spark程序，Spark每10s统计结果并输出<br><img src="http://oa4pac8sx.bkt.clouddn.com/2016-07-12%2013:22:06%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/12/7-12/" rel="next" title="7.12">
+                <i class="fa fa-chevron-left"></i> 7.12
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oa4pac8sx.bkt.clouddn.com/u=4284545010,775528643&fm=21&gp=0.jpg"
+               alt="GBW" />
+          <p class="site-author-name" itemprop="name">GBW</p>
+          <p class="site-description motion-element" itemprop="description">Scala,Spark</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GBWen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/u/5660562931" target="_blank" title="曾经博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  曾经博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://user.qzone.qq.com/376366210" target="_blank" title="QQ空间">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  QQ空间
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/guan-bo-wen-98" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GBW</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
