@@ -270,6 +270,103 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/13/7-13(2)/" itemprop="url">
+                  7.13(2)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-13T20:39:42+08:00" content="2016-07-13">
+              2016-07-13
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>读写图片文件，网上基本什么也查不到<br>手写读写Bmp图片，用spark MLlib的Kmeans对图片进行压缩<br>写了转化成灰度图和RGB图两种</p>
+<p>读写Bmp<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">  * Created by gbw on 16-7-13.</div><div class="line">  */</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io._</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">BmpIO</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="comment">//将数据写入文件</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">writeBmp</span></span>(bmpPath: <span class="type">String</span>, red: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]], green: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]], blue: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]]) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> fos = <span class="keyword">new</span> <span class="type">FileOutputStream</span>(bmpPath)</div><div class="line">		<span class="keyword">val</span> dos = <span class="keyword">new</span> <span class="type">DataOutputStream</span>(fos)</div><div class="line">		writeBmp24(dos, red, green ,blue)</div><div class="line">		dos.flush()</div><div class="line">		dos.close()</div><div class="line">		fos.close()</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//写bmp图片的信息头和文件头还有位图数据</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">writeBmp24</span></span>(dos: <span class="type">DataOutputStream</span>, red: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]], green: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]], blue: <span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]]) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> width = red(<span class="number">0</span>).length</div><div class="line">		<span class="keyword">val</span> height = red.length</div><div class="line"></div><div class="line">		<span class="comment">//14字节的文件头</span></div><div class="line">		<span class="comment">//代表BM</span></div><div class="line">		<span class="keyword">val</span> bfType = <span class="number">0x424d</span>.toShort</div><div class="line">		<span class="comment">// bmp文件的大小（2—5字节）</span></div><div class="line">		<span class="keyword">val</span> bfSize = <span class="number">54</span> + width * height * <span class="number">3</span></div><div class="line">		<span class="comment">// 位图文件保留字，必须为0（6-7字节）</span></div><div class="line">		<span class="keyword">val</span> bfReserved1 = <span class="number">0</span></div><div class="line">		<span class="comment">// 位图文件保留字，必须为0（8-9字节）</span></div><div class="line">		<span class="keyword">val</span> bfReserved2 = <span class="number">0</span></div><div class="line">		<span class="comment">// 文件头开始到位图实际数据之间的字节的偏移量（10-13字节）</span></div><div class="line">		<span class="keyword">val</span> bfOffBits = <span class="number">54</span></div><div class="line"></div><div class="line">		dos writeShort bfType</div><div class="line">		dos write(changeByte(bfSize), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(bfReserved1), <span class="number">0</span>, <span class="number">2</span>)</div><div class="line">		dos write(changeByte(bfReserved2), <span class="number">0</span>, <span class="number">2</span>)</div><div class="line">		dos write(changeByte(bfOffBits), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line"></div><div class="line">		<span class="comment">//40字节的信息头</span></div><div class="line">		<span class="comment">// 信息头所需的字节数（14-17字节）</span></div><div class="line">		<span class="keyword">val</span> biSize = <span class="number">40</span></div><div class="line">		<span class="comment">// 位图的宽（18-21字节）</span></div><div class="line">		<span class="keyword">val</span> biWidth = width</div><div class="line">		<span class="comment">// 位图的高（22-25字节）</span></div><div class="line">		<span class="keyword">val</span> biHeight = height</div><div class="line">		<span class="comment">// 目标设备的级别，必须是1（26-27字节）</span></div><div class="line">		<span class="keyword">val</span> biPlanes = <span class="number">1</span></div><div class="line">		<span class="comment">// 每个像素所需的位数（28-29字节），必须是1位（双色）、</span></div><div class="line">		<span class="comment">// 4位（16色）、8位（256色）或者24位（真彩色）之一。</span></div><div class="line">		<span class="keyword">val</span> biBitcount = <span class="number">24</span></div><div class="line">		<span class="comment">// 位图压缩类型，必须是0（不压缩）（30-33字节）、</span></div><div class="line">		<span class="comment">//1（BI_RLEB压缩类型）或2（BI_RLE4压缩类型）之一。</span></div><div class="line">		<span class="keyword">val</span> biCompression = <span class="number">0</span></div><div class="line">		<span class="comment">// 实际位图图像的大小，即整个实际绘制的图像大小（34-37字节）</span></div><div class="line">		<span class="keyword">val</span> biSizeImage = width * height</div><div class="line">		<span class="comment">// 位图水平分辨率，每米像素数（38-41字节）这个数是系统默认值</span></div><div class="line">		<span class="keyword">val</span> biXPelsPerMeter = <span class="number">0</span></div><div class="line">		<span class="comment">// 位图垂直分辨率，每米像素数（42-45字节）这个数是系统默认值</span></div><div class="line">		<span class="keyword">val</span> biYPelsPerMeter = <span class="number">0</span></div><div class="line">		<span class="comment">// 位图实际使用的颜色表中的颜色数（46-49字节），</span></div><div class="line">		<span class="comment">// 如果为0的话，说明全部使用了</span></div><div class="line">		<span class="keyword">val</span> biClrUsed = <span class="number">0</span></div><div class="line">		<span class="comment">// 位图显示过程中重要的颜色数(50-53字节)，</span></div><div class="line">		<span class="comment">// 如果为0的话，说明全部重要</span></div><div class="line">		<span class="keyword">val</span> biClrImportant = <span class="number">0</span></div><div class="line"></div><div class="line">		<span class="comment">// 因为是大端存储，那么也就是说同样会大端输出。</span></div><div class="line">		<span class="comment">// 所以首先调用方法将int数据转变为多个byte数据，</span></div><div class="line">		<span class="comment">// 并且按小端存储的顺序.</span></div><div class="line">		dos write(changeByte(biSize), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biWidth), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biHeight), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biPlanes), <span class="number">0</span>, <span class="number">2</span>)</div><div class="line">		dos write(changeByte(biBitcount), <span class="number">0</span>, <span class="number">2</span>)</div><div class="line">		dos write(changeByte(biCompression), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biSizeImage), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biXPelsPerMeter), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biYPelsPerMeter), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biClrUsed), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line">		dos write(changeByte(biClrImportant), <span class="number">0</span>, <span class="number">4</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 因为是24位图，所以没有颜色表</span></div><div class="line">		<span class="comment">// 通过遍历输入位图数据</span></div><div class="line">		<span class="comment">// 这里遍历的时候注意，在计算机内存中位图数据</span></div><div class="line">		<span class="comment">// 是从左到右，从下到上来保存的，</span></div><div class="line">		<span class="comment">// 也就是说实际图像的第一行的点在内存是最后一行</span></div><div class="line">		<span class="keyword">for</span>(i &lt;- height - <span class="number">1</span> to <span class="number">0</span> by <span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">for</span>(j &lt;- <span class="number">0</span> to width - <span class="number">1</span>)</div><div class="line">			&#123;</div><div class="line">				dos write(changeByte(blue(i)(j)), <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">				dos write(changeByte(green(i)(j)), <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">				dos write(changeByte(red(i)(j)), <span class="number">0</span>, <span class="number">1</span>)</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 将一个int数据转为按小端顺序排列的字节数组</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">changeByte</span></span>(data: <span class="type">Int</span>): <span class="type">Array</span>[<span class="type">Byte</span>] =</div><div class="line">		<span class="type">Array</span>(((data &lt;&lt; <span class="number">24</span>) &gt;&gt; <span class="number">24</span>).toByte, ((data &lt;&lt; <span class="number">16</span>) &gt;&gt; <span class="number">24</span>).toByte, ((data &lt;&lt; <span class="number">8</span>) &gt;&gt; <span class="number">24</span>).toByte, (data &gt;&gt; <span class="number">24</span>).toByte)</div><div class="line"></div><div class="line">	<span class="comment">// 将四个字节解析成int数据</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">ChangeInt</span></span>(array2: <span class="type">Array</span>[<span class="type">Byte</span>], start: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> i = ((array2(start) &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">24</span>) | ((array2(start - <span class="number">1</span>) &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">16</span>)</div><div class="line">		<span class="keyword">val</span> j = ((array2(start - <span class="number">2</span>) &amp; <span class="number">0xff</span>) &lt;&lt; <span class="number">8</span>) | (array2(start - <span class="number">3</span>) &amp; <span class="number">0xff</span>)</div><div class="line">		i | j</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// 读取rgb数据</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">getInf</span></span>(bis: <span class="type">BufferedInputStream</span>, height: <span class="type">Int</span>, width: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> red = <span class="type">Array</span>.ofDim[<span class="type">Int</span>](height, width)</div><div class="line">		<span class="keyword">val</span> green = <span class="type">Array</span>.ofDim[<span class="type">Int</span>](height, width)</div><div class="line">		<span class="keyword">val</span> blue = <span class="type">Array</span>.ofDim[<span class="type">Int</span>](height, width)</div><div class="line"></div><div class="line">		<span class="comment">// 计算系统在每行的填充的字节数</span></div><div class="line">		<span class="keyword">val</span> m = width * <span class="number">3</span> % <span class="number">4</span></div><div class="line">		<span class="keyword">var</span> skip_width = <span class="number">0</span></div><div class="line">		<span class="keyword">if</span>(m != <span class="number">0</span>)</div><div class="line">			skip_width = <span class="number">4</span> - m</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (i &lt;- height - <span class="number">1</span> to <span class="number">0</span> by <span class="number">-1</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">for</span> (j &lt;- <span class="number">0</span> to width - <span class="number">1</span>)</div><div class="line">			&#123;</div><div class="line">				blue(i)(j) = bis.read</div><div class="line">				green(i)(j) = bis.read</div><div class="line">				red(i)(j) = bis.read</div><div class="line">				<span class="keyword">if</span> (j == <span class="number">0</span>)</div><div class="line">					bis skip skip_width</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		(red, green, blue)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">readBmp</span></span>(bmpPath: <span class="type">String</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> fin = <span class="keyword">new</span> <span class="type">FileInputStream</span>(bmpPath)</div><div class="line">		<span class="keyword">val</span> bis = <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(fin)</div><div class="line">		<span class="comment">// 获得文件头和信息头的数据</span></div><div class="line">		<span class="comment">//分别是14字节和40字节</span></div><div class="line">		<span class="keyword">val</span> array1 = <span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Byte</span>](<span class="number">14</span>)</div><div class="line">		bis.read(array1, <span class="number">0</span>, <span class="number">14</span>)</div><div class="line">		<span class="keyword">val</span> array2 = <span class="keyword">new</span> <span class="type">Array</span>[<span class="type">Byte</span>](<span class="number">40</span>)</div><div class="line">		bis.read(array2, <span class="number">0</span>, <span class="number">40</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 解析信息头的数据得到位图数据的宽和高</span></div><div class="line">		<span class="keyword">val</span> width = <span class="type">BmpIO</span>.<span class="type">ChangeInt</span>(array2, <span class="number">7</span>)</div><div class="line">		<span class="keyword">val</span> height = <span class="type">BmpIO</span>.<span class="type">ChangeInt</span>(array2, <span class="number">11</span>)</div><div class="line"></div><div class="line">		<span class="comment">//println(s"width: $width, height: $height")</span></div><div class="line">		<span class="keyword">val</span> (red, green, blue) = <span class="type">BmpIO</span>.getInf(bis, height, width)</div><div class="line">		fin.close()</div><div class="line">		bis.close()</div><div class="line">		(width, height, red, green, blue)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/13/7-13(2)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/13/7-13(1)/" itemprop="url">
                   7.13(1)
                 </a>
@@ -313,7 +410,7 @@
 
       
         
-          <p>HDFS写回怎么也查不到<br>查看Spark源码里面的函数saveAsHadoopFile终于解决<br>写了个简单的WordCount、<br>从hdfs://localhost:9000/gbw/input/…读<br>写回hdfshdfs://localhost:9000/tmp…</p>
+          <p>HDFS写回怎么也查不到<br>查看Spark源码里面的函数saveAsHadoopFile终于解决<br>写了个简单的WordCount<br>从hdfs://localhost:9000/gbw/input/…读<br>写回hdfshdfs://localhost:9000/tmp…</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.&#123;<span class="type">IntWritable</span>, <span class="type">Text</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapred.<span class="type">TextOutputFormat</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</div><div class="line">  * Created by gbw on 16-7-13.</div><div class="line">  */</span></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">FILE_NAME</span></span>: <span class="type">String</span> =<span class="string">"word_count_results"</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">2</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.print(<span class="string">"Usage: &lt;Input File dir&gt; &lt;Output File dir&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Word count"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> textFile = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> wordCounts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>)).map(word =&gt; (word,<span class="number">1</span>)).reduceByKey((a,b) =&gt; a+b)</div><div class="line">		<span class="comment">//wordCounts.saveAsTextFile(FILE_NAME + System.currentTimeMillis())</span></div><div class="line">		wordCounts.saveAsHadoopFile(args(<span class="number">1</span>),classOf[<span class="type">Text</span>],classOf[<span class="type">IntWritable</span>],classOf[<span class="type">TextOutputFormat</span>[<span class="type">Text</span>,<span class="type">IntWritable</span>]])</div><div class="line">		println(<span class="string">"Word count successfully saved!"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/07/13/7-13(1)/#more" rel="contents">
@@ -1116,100 +1213,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/07/7-7/" itemprop="url">
-                  7.7
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-07T19:13:43+08:00" content="2016-07-07">
-              2016-07-07
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>继续Scala语法<br>Catmaid安装运行，基本完成，有的js运行不起来不知道为什么<br>已有的catmaid网站：<br>1.<a href="http://neurocean.janelia.org/catmaid/" target="_blank" rel="external">http://neurocean.janelia.org/catmaid/</a><br>2.<a href="http://openconnecto.me/catmaid/" target="_blank" rel="external">http://openconnecto.me/catmaid/</a><br>3.<a href="http://fly.mpi-cbg.de/dev/" target="_blank" rel="external">http://fly.mpi-cbg.de/dev/</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1255,7 +1258,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

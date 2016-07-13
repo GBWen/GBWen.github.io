@@ -96,20 +96,20 @@
 
 
 
-<meta name="description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount、从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.">
+<meta name="description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
+123456789101112131415161718192021222324252627import org.apache.hadoop.i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="7.13(1)">
 <meta property="og:url" content="http://yoursite.com/2016/07/13/7-13(1)/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount、从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.">
+<meta property="og:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
+123456789101112131415161718192021222324252627import org.apache.hadoop.i">
 <meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/Browse%20HDFS.png">
-<meta property="og:updated_time" content="2016-07-13T01:55:35.444Z">
+<meta property="og:updated_time" content="2016-07-13T01:56:41.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7.13(1)">
-<meta name="twitter:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount、从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.">
+<meta name="twitter:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
+123456789101112131415161718192021222324252627import org.apache.hadoop.i">
 <meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/Browse%20HDFS.png">
 
 
@@ -313,7 +313,7 @@
       
 
       
-        <p>HDFS写回怎么也查不到<br>查看Spark源码里面的函数saveAsHadoopFile终于解决<br>写了个简单的WordCount、<br>从hdfs://localhost:9000/gbw/input/…读<br>写回hdfshdfs://localhost:9000/tmp…</p>
+        <p>HDFS写回怎么也查不到<br>查看Spark源码里面的函数saveAsHadoopFile终于解决<br>写了个简单的WordCount<br>从hdfs://localhost:9000/gbw/input/…读<br>写回hdfshdfs://localhost:9000/tmp…</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.&#123;<span class="type">IntWritable</span>, <span class="type">Text</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapred.<span class="type">TextOutputFormat</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-13.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">FILE_NAME</span></span>: <span class="type">String</span> =<span class="string">"word_count_results"</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">2</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.print(<span class="string">"Usage: &lt;Input File dir&gt; &lt;Output File dir&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Word count"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> textFile = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> wordCounts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>)).map(word =&gt; (word,<span class="number">1</span>)).reduceByKey((a,b) =&gt; a+b)</div><div class="line">		<span class="comment">//wordCounts.saveAsTextFile(FILE_NAME + System.currentTimeMillis())</span></div><div class="line">		wordCounts.saveAsHadoopFile(args(<span class="number">1</span>),classOf[<span class="type">Text</span>],classOf[<span class="type">IntWritable</span>],classOf[<span class="type">TextOutputFormat</span>[<span class="type">Text</span>,<span class="type">IntWritable</span>]])</div><div class="line">		println(<span class="string">"Word count successfully saved!"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>执行命令：</p>
@@ -352,6 +352,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/13/7-13(2)/" rel="prev" title="7.13(2)">
+                7.13(2) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -419,7 +423,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
