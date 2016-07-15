@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="8," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -96,19 +96,19 @@
 
 
 
-<meta name="description" content="Spark MLlib 封装的很好的，上手并不难，写了个简单的Kmeans 聚类
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.">
+<meta name="description" content="新买的键盘到了，有瑕疵，但敲着确实爽几天写了个MLlib的线性回归，很简单的例子
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
 <meta property="og:type" content="article">
-<meta property="og:title" content="7-12(3)">
-<meta property="og:url" content="http://yoursite.com/2016/07/12/7-12(3)/index.html">
+<meta property="og:title" content="7-15">
+<meta property="og:url" content="http://yoursite.com/2016/07/15/7-15/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="Spark MLlib 封装的很好的，上手并不难，写了个简单的Kmeans 聚类
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.">
-<meta property="og:updated_time" content="2016-07-12T13:17:19.466Z">
+<meta property="og:description" content="新买的键盘到了，有瑕疵，但敲着确实爽几天写了个MLlib的线性回归，很简单的例子
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
+<meta property="og:updated_time" content="2016-07-15T10:55:21.001Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7-12(3)">
-<meta name="twitter:description" content="Spark MLlib 封装的很好的，上手并不难，写了个简单的Kmeans 聚类
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.">
+<meta name="twitter:title" content="7-15">
+<meta name="twitter:description" content="新买的键盘到了，有瑕疵，但敲着确实爽几天写了个MLlib的线性回归，很简单的例子
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
 
 
 
@@ -129,9 +129,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/12/7-12(3)/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/07/15/7-15/"/>
 
-  <title> 7-12(3) | GBW's Blog </title>
+  <title> 7-15 | GBW's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +271,7 @@
             
             
               
-                7-12(3)
+                7-15
               
             
           </h1>
@@ -283,8 +283,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T15:56:55+08:00" content="2016-07-12">
-              2016-07-12
+            <time itemprop="dateCreated" datetime="2016-07-15T18:46:38+08:00" content="2016-07-15">
+              2016-07-15
             </time>
           </span>
 
@@ -311,12 +311,8 @@
       
 
       
-        <p>Spark MLlib 封装的很好的，上手并不难，写了个简单的Kmeans 聚类</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.clustering.<span class="type">KMeans</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Kmeans</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">WARN</span>)</div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.eclipse.jetty.server"</span>).setLevel(<span class="type">Level</span>.<span class="type">OFF</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"MyKmeans"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">// 装载数据集</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/input"</span>, <span class="number">1</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map(s =&gt; <span class="type">Vectors</span>.dense(s.split(' ').map(_.toDouble)))</div><div class="line"></div><div class="line">		<span class="comment">// 将数据集聚类,2 个类,20 次迭代,进行模型训练形成数据模型</span></div><div class="line">		<span class="keyword">val</span> numClusters = <span class="number">2</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">20</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">KMeans</span>.train(parsedData, numClusters, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">// 打印数据模型的中心点</span></div><div class="line">		println(<span class="string">"Cluster centers:"</span>)</div><div class="line">		<span class="keyword">for</span> (c &lt;- model.clusterCenters)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">" "</span> + c.toString)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 使用误差平方之和来评估数据模型</span></div><div class="line">		<span class="keyword">val</span> cost = model.computeCost(parsedData)</div><div class="line">		println(<span class="string">"Within Set Sum of Squared Errors = "</span> + cost)</div><div class="line"></div><div class="line">		<span class="comment">// 使用模型测试单点数据</span></div><div class="line">		println(<span class="string">"Vectors 0.2 0.2 0.2 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"0.2 0.2 0.2"</span>.split(' ').map(_.toDouble))))</div><div class="line">		println(<span class="string">"Vectors 0.25 0.25 0.25 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"0.25 0.25 0.25"</span>.split(' ').map(_.toDouble))))</div><div class="line">		println(<span class="string">"Vectors 8 8 8 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"8 8 8"</span>.split(' ').map(_.toDouble))))</div><div class="line">		<span class="keyword">val</span> testdata = data.map(s =&gt; <span class="type">Vectors</span>.dense(s.split(' ').map(_.toDouble)))</div><div class="line">		<span class="keyword">val</span> result1 = model.predict(testdata)</div><div class="line">		result1.saveAsTextFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/result_kmeans1"</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 交叉评估 2,返回数据集和结果</span></div><div class="line">		<span class="keyword">val</span> result2 = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> linevectore = <span class="type">Vectors</span>.dense(line.split(' ').map(_.toDouble))</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(linevectore)</div><div class="line">				line + <span class="string">" "</span> + prediction</div><div class="line">		&#125;.saveAsTextFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/result_kmeans2"</span>)</div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>Input<br>0.0 0.0 0.0<br>0.1 0.1 0.1<br>0.2 0.2 0.2<br>9.0 9.0 9.0<br>9.1 9.1 9.1<br>9.2 9.2 9.2</p>
-<p>result1:<br>0<br>0<br>0<br>1<br>1<br>1</p>
-<p>result2:<br>0.0 0.0 0.0 0<br>0.1 0.1 0.1 0<br>0.2 0.2 0.2 0<br>9.0 9.0 9.0 1<br>9.1 9.1 9.1 1<br>9.2 9.2 9.2 1</p>
+        <p>新买的键盘到了，有瑕疵，但敲着确实爽<br>几天写了个MLlib的线性回归，很简单的例子</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LinearRegressionWithSGD</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LabeledPoint</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-15.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">LinearRegression</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//屏蔽log</span></div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">ERROR</span>)</div><div class="line"></div><div class="line">		<span class="comment">//设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Linear Regression"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">//Load and parse the data</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Regression/lpsa.data"</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> parts = line.split(',')</div><div class="line">				<span class="type">LabeledPoint</span>(parts(<span class="number">0</span>).toDouble,<span class="type">Vectors</span>.dense(parts(<span class="number">1</span>).split(' ').map(_.toDouble)))</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">//Building the model</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">100</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">LinearRegressionWithSGD</span>.train(parsedData, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">//Evaluate model on training examples and compute training error</span></div><div class="line">		<span class="keyword">val</span> valuesAndPreds = parsedData.map</div><div class="line">		&#123;</div><div class="line">			point =&gt;</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(point.features)</div><div class="line">				(point.label, prediction)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> <span class="type">MSE</span> = valuesAndPreds.map</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">case</span>(v,p) =&gt;</div><div class="line">				math.pow((v-p),<span class="number">2</span>)</div><div class="line">		&#125;.reduce(_+_)/valuesAndPreds.count</div><div class="line">		println(<span class="string">"Training Mean Squared Error = "</span> +<span class="type">MSE</span>)</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -337,28 +333,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/8/" rel="tag">#8</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/12/7-12(2)/" rel="next" title="7-12(2)">
-                <i class="fa fa-chevron-left"></i> 7-12(2)
+              <a href="/2016/07/14/系统架构-1/" rel="next" title="系统架构(1) ">
+                <i class="fa fa-chevron-left"></i> 系统架构(1) 
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/12/Plan2/" rel="prev" title="Plan2">
-                Plan2 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
