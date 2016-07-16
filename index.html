@@ -270,6 +270,102 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/16/系统架构2/" itemprop="url">
+                  系统架构2
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-16T19:04:45+08:00" content="2016-07-16">
+              2016-07-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="系统架构2"><a href="#系统架构2" class="headerlink" title="系统架构2"></a>系统架构2</h1><p>我们需要两种形式的基本要求：<br>1.随着实时数据流的建模<br>2.大批量数据分析建模</p>
+<h2 id="Spark架构思路"><a href="#Spark架构思路" class="headerlink" title="Spark架构思路"></a>Spark架构思路</h2><p>采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)<br>在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark平台是开发的GraphX（图计算框架）和MLlib（机器学习库）都可以直接用于批量的数据分析，极大的方便了应用程序的开发和维护。<br>服务层可以利用SparkSQL等索引服务针对批量处理层的结果进行索引，接受外部查询请求，完成SQL查询任务。<br>速度层采用分布式的流处理平台Spark Streaming，作为批量处理层高延迟响应的补充，可实时计算数据完成处理。<br><img src="http://oa4pac8sx.bkt.clouddn.com/Lambda.png" alt="enter image description here"></p>
+<h2 id="平台整体架构"><a href="#平台整体架构" class="headerlink" title="平台整体架构"></a>平台整体架构</h2><p>重点关注Spark平台机器学习算法的实现，设计目标是应对高分辨率图像数据下机器学习任务的挑战，同时适应流数据的特点，基于Spark Streaming 框架上设计在线机器学习算法。<br>底层为Spark平台的基础设施，上层为设计和实现机器学习算法的框架层，其中部分算法依赖GraphX和Saprk Streaming框架，在框架层之上是Web服务接口层，主要封装各个算法的操作和调用接口，以Web Service的忌口方式暴露给外部使用，提供发送请求。<br><img src="http://oa4pac8sx.bkt.clouddn.com/architecture2.png" alt="enter image description here"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/15/7-15/" itemprop="url">
                   7-15
                 </a>
@@ -1139,102 +1235,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/10/7-10/" itemprop="url">
-                  7-10
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-10T19:13:56+08:00" content="2016-07-10">
-              2016-07-10
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习 深入Spark内核 迷迷糊糊<br>搞定Idea + Spark环境<br>原来：<br>新建工程：spark scala 2.10.6 不能用2.11.8!!!!!<br>VM option: -Dspark.master=local<br>打包运行./spark-submit –class “SparkPi” –master local[4] /home/gbw/Mytest.jar<br>Class为主类的名字</p>
-<p>SparkPi.scala</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * Created by gbw on 16-7-10.</div><div class="line">  */</div><div class="line">import scala.math.random</div><div class="line">import org.apache.spark._</div><div class="line"></div><div class="line">/** Computes an approximation to pi */</div><div class="line">object SparkPi &#123;</div><div class="line">	def main(args: Array[String]) &#123;</div><div class="line">		val conf = new SparkConf().setAppName(&quot;Spark Pi&quot;)</div><div class="line">		val spark = new SparkContext(conf)</div><div class="line">		val slices = if (args.length &gt; 0) args(0).toInt else 2</div><div class="line">		val n = math.min(100000L * slices, Int.MaxValue).toInt // avoid overflow</div><div class="line">		val count = spark.parallelize(1 until n, slices).map &#123; i =&gt;</div><div class="line">				val x = random * 2 - 1</div><div class="line">				val y = random * 2 - 1</div><div class="line">				if (x*x + y*y &lt; 1) 1 else 0</div><div class="line">			&#125;.reduce(_ + _)</div><div class="line">		println(&quot;Pi is roughly &quot; + 4.0 * count / n)</div><div class="line">		spark.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1280,7 +1280,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
