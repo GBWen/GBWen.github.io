@@ -270,6 +270,162 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/16/7-16/" itemprop="url">
+                  7.16
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-16T19:14:47+08:00" content="2016-07-16">
+              2016-07-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁<br>易用的而丰富的接口,极大的方便了对分布式图处理的需求。<br>这里写了个PageRank算法的例子<br>PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+<p>‘’’ scala<br>import org.apache.log4j.{Level, Logger}<br>import org.apache.spark.{SparkContext, SparkConf}<br>import org.apache.spark.graphx._</p>
+<p>/**</p>
+<ul>
+<li>Created by gbw on 16-7-16.<br>*/</li>
+</ul>
+<p>import org.apache.spark.rdd.RDD<br>object PageRank<br>{<br>    def main(args: Array[String])<br>    {<br>        //屏蔽日志<br>        Logger.getLogger(“org.apache.spark”).setLevel(Level.WARN)<br>        Logger.getLogger(“org.eclipse.jetty.server”).setLevel(Level.OFF)</p>
+<pre><code>    //设置运行环境
+    val conf = new SparkConf().setAppName(&quot;PageRank&quot;).setMaster(&quot;local&quot;)
+    val sc = new SparkContext(conf)
+
+    //读入数据文件
+    val articles: RDD[String] =
+        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-vertices.txt&quot;)
+    val links: RDD[String] =
+        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-edges.txt&quot;)
+
+    //装载顶点和边
+    val vertices = articles.map
+    {
+        line =&gt;
+            val fields = line.split(&apos;\t&apos;)
+            (fields(0).toLong, fields(1))
+    }
+    val edges = links.map
+    {
+        line =&gt;
+            val fields = line.split(&apos;\t&apos;)
+            Edge(fields(0).toLong, fields(1).toLong, 0)
+    }
+
+    //cache 操作
+    //val graph = Graph(vertices, edges, &quot;&quot;).persist(StorageLevel.MEMORY_ONLY_SER)
+    val graph = Graph(vertices, edges, &quot;&quot;).persist()
+
+    //测试
+    println(&quot;**********************************************************&quot;)
+    println(&quot;获取 5 个 triplet 信息&quot;)
+    println(&quot;**********************************************************&quot;)
+    graph.triplets.take(5).foreach(println(_))
+
+    //pageRank 算法里面的时候使用了 cache(),故前面 persist 的时候只能使用MEMORY_ONLY
+    println(&quot;**********************************************************&quot;)
+    println(&quot;PageRank 计算,获取最有价值的数据&quot;)
+    println(&quot;**********************************************************&quot;)
+
+    val prGraph = graph.pageRank(0.001).cache()
+    val titleAndPrGraph = graph.outerJoinVertices(prGraph.vertices)
+    {
+        (v, title, rank) =&gt; (rank.getOrElse(0.0), title)
+    }
+
+    titleAndPrGraph.vertices.top(10)
+    {
+        Ordering.by((entry: (VertexId, (Double, String))) =&gt; entry._2._1)
+    }.foreach(t =&gt; println(t._2._2 + &quot;: &quot; + t._2._1))
+
+    sc.stop()
+}
+</code></pre><p>}<br>‘’’</p>
+<p>输出：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/16/7-16/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/16/系统架构2/" itemprop="url">
                   系统架构2
                 </a>
@@ -1141,100 +1297,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/11/7-11/" itemprop="url">
-                  7.11
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-11T21:01:51+08:00" content="2016-07-11">
-              2016-07-11
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在git上面搭建博客gbwen.github.io<br>使用NexT主题，并排版美化好<br>SparkStreaming学习，但是视频里面的程序对着敲没跑通<br>整理一下，明天：<br>1.PeopleAge统计<br>        1)fileText<br>    2)HDFS<br>2.SparkStreaming<br>    1)Network<br>    2)HDFS<br>后天：<br>SparkStreaming图片处理<br>大后天：<br>MLlib<br>可以的话加入SparkStreaming</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1280,7 +1342,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

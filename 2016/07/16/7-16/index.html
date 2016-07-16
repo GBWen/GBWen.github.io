@@ -96,19 +96,16 @@
 
 
 
-<meta name="description" content="新买的键盘到了，有瑕疵，但敲着确实爽今天写了个MLlib的线性回归，很简单的例子
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
+<meta name="description" content="Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁易用的而丰富的接口,极大的方便了对分布式图处理的需求。这里写了个PageRank算法的例子PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指">
 <meta property="og:type" content="article">
-<meta property="og:title" content="7-15">
-<meta property="og:url" content="http://yoursite.com/2016/07/15/7-15/index.html">
+<meta property="og:title" content="7.16">
+<meta property="og:url" content="http://yoursite.com/2016/07/16/7-16/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="新买的键盘到了，有瑕疵，但敲着确实爽今天写了个MLlib的线性回归，很简单的例子
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
-<meta property="og:updated_time" content="2016-07-15T11:36:59.913Z">
+<meta property="og:description" content="Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁易用的而丰富的接口,极大的方便了对分布式图处理的需求。这里写了个PageRank算法的例子PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指">
+<meta property="og:updated_time" content="2016-07-16T11:18:20.282Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7-15">
-<meta name="twitter:description" content="新买的键盘到了，有瑕疵，但敲着确实爽今天写了个MLlib的线性回归，很简单的例子
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import org.apache.log4j.&amp;#123;Level, Logger&amp;#125;import org.apac">
+<meta name="twitter:title" content="7.16">
+<meta name="twitter:description" content="Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁易用的而丰富的接口,极大的方便了对分布式图处理的需求。这里写了个PageRank算法的例子PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指">
 
 
 
@@ -129,9 +126,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/15/7-15/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/07/16/7-16/"/>
 
-  <title> 7-15 | GBW's Blog </title>
+  <title> 7.16 | GBW's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +268,7 @@
             
             
               
-                7-15
+                7.16
               
             
           </h1>
@@ -283,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-15T18:46:38+08:00" content="2016-07-15">
-              2016-07-15
+            <time itemprop="dateCreated" datetime="2016-07-16T19:14:47+08:00" content="2016-07-16">
+              2016-07-16
             </time>
           </span>
 
@@ -311,8 +308,78 @@
       
 
       
-        <p>新买的键盘到了，有瑕疵，但敲着确实爽<br>今天写了个MLlib的线性回归，很简单的例子</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LinearRegressionWithSGD</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LabeledPoint</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-15.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">LinearRegression</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//屏蔽log</span></div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">ERROR</span>)</div><div class="line"></div><div class="line">		<span class="comment">//设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Linear Regression"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">//Load and parse the data</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Regression/lpsa.data"</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> parts = line.split(',')</div><div class="line">				<span class="type">LabeledPoint</span>(parts(<span class="number">0</span>).toDouble,<span class="type">Vectors</span>.dense(parts(<span class="number">1</span>).split(' ').map(_.toDouble)))</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">//Building the model</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">100</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">LinearRegressionWithSGD</span>.train(parsedData, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">//Evaluate model on training examples and compute training error</span></div><div class="line">		<span class="keyword">val</span> valuesAndPreds = parsedData.map</div><div class="line">		&#123;</div><div class="line">			point =&gt;</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(point.features)</div><div class="line">				(point.label, prediction)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> <span class="type">MSE</span> = valuesAndPreds.map</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">case</span>(v,p) =&gt;</div><div class="line">				math.pow((v-p),<span class="number">2</span>)</div><div class="line">		&#125;.reduce(_+_)/valuesAndPreds.count</div><div class="line">		println(<span class="string">"Training Mean Squared Error = "</span> +<span class="type">MSE</span>)</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁<br>易用的而丰富的接口,极大的方便了对分布式图处理的需求。<br>这里写了个PageRank算法的例子<br>PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+<p>‘’’ scala<br>import org.apache.log4j.{Level, Logger}<br>import org.apache.spark.{SparkContext, SparkConf}<br>import org.apache.spark.graphx._</p>
+<p>/**</p>
+<ul>
+<li>Created by gbw on 16-7-16.<br>*/</li>
+</ul>
+<p>import org.apache.spark.rdd.RDD<br>object PageRank<br>{<br>    def main(args: Array[String])<br>    {<br>        //屏蔽日志<br>        Logger.getLogger(“org.apache.spark”).setLevel(Level.WARN)<br>        Logger.getLogger(“org.eclipse.jetty.server”).setLevel(Level.OFF)</p>
+<pre><code>    //设置运行环境
+    val conf = new SparkConf().setAppName(&quot;PageRank&quot;).setMaster(&quot;local&quot;)
+    val sc = new SparkContext(conf)
+
+    //读入数据文件
+    val articles: RDD[String] =
+        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-vertices.txt&quot;)
+    val links: RDD[String] =
+        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-edges.txt&quot;)
+
+    //装载顶点和边
+    val vertices = articles.map
+    {
+        line =&gt;
+            val fields = line.split(&apos;\t&apos;)
+            (fields(0).toLong, fields(1))
+    }
+    val edges = links.map
+    {
+        line =&gt;
+            val fields = line.split(&apos;\t&apos;)
+            Edge(fields(0).toLong, fields(1).toLong, 0)
+    }
+
+    //cache 操作
+    //val graph = Graph(vertices, edges, &quot;&quot;).persist(StorageLevel.MEMORY_ONLY_SER)
+    val graph = Graph(vertices, edges, &quot;&quot;).persist()
+
+    //测试
+    println(&quot;**********************************************************&quot;)
+    println(&quot;获取 5 个 triplet 信息&quot;)
+    println(&quot;**********************************************************&quot;)
+    graph.triplets.take(5).foreach(println(_))
+
+    //pageRank 算法里面的时候使用了 cache(),故前面 persist 的时候只能使用MEMORY_ONLY
+    println(&quot;**********************************************************&quot;)
+    println(&quot;PageRank 计算,获取最有价值的数据&quot;)
+    println(&quot;**********************************************************&quot;)
+
+    val prGraph = graph.pageRank(0.001).cache()
+    val titleAndPrGraph = graph.outerJoinVertices(prGraph.vertices)
+    {
+        (v, title, rank) =&gt; (rank.getOrElse(0.0), title)
+    }
+
+    titleAndPrGraph.vertices.top(10)
+    {
+        Ordering.by((entry: (VertexId, (Double, String))) =&gt; entry._2._1)
+    }.foreach(t =&gt; println(t._2._2 + &quot;: &quot; + t._2._1))
+
+    sc.stop()
+}
+</code></pre><p>}<br>‘’’</p>
+<p>输出：</p>
+<a id="more"></a>
+<p>Using Spark’s default log4j profile: org/apache/spark/log4j-defaults.properties<br>16/07/16 19:12:39 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform… using builtin-java classes where applicable<br>16/07/16 19:12:40 WARN Utils: Your hostname, gbw-Inspiron-3537 resolves to a loopback address: 127.0.1.1; using 192.168.31.145 instead (on interface wlan0)<br>16/07/16 19:12:40 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address<br>16/07/16 19:12:42 INFO Slf4jLogger: Slf4jLogger started<br>16/07/16 19:12:42 INFO Remoting: Starting remoting<br>16/07/16 19:12:42 INFO Remoting: Remoting started; listening on addresses :[akka.tcp://sparkDriverActorSystem@192.168.31.145:51604]<br>16/07/16 19:12:46 INFO FileInputFormat: Total input paths to process : 1<br>16/07/16 19:12:46 INFO FileInputFormat: Total input paths to process : 1</p>
+<hr>
+<p>获取 5 个 triplet 信息</p>
+<hr>
+<p>16/07/16 19:12:47 INFO deprecation: mapred.tip.id is deprecated. Instead, use mapreduce.task.id<br>16/07/16 19:12:47 INFO deprecation: mapred.task.id is deprecated. Instead, use mapreduce.task.attempt.id<br>16/07/16 19:12:47 INFO deprecation: mapred.task.is.map is deprecated. Instead, use mapreduce.task.ismap<br>16/07/16 19:12:47 INFO deprecation: mapred.task.partition is deprecated. Instead, use mapreduce.task.partition<br>16/07/16 19:12:47 INFO deprecation: mapred.job.id is deprecated. Instead, use mapreduce.job.id<br>((146271392968588,Computer Consoles Inc.),(7097126743572404313,Berkeley Software Distribution),0)<br>((146271392968588,Computer Consoles Inc.),(8830299306937918434,University of California, Berkeley),0)<br>((625290464179456,List of Penguin Classics),(1735121673437871410,George Berkeley),0)<br>((1342848262636510,List of college swimming and diving teams),(8830299306937918434,University of California, Berkeley),0)<br>((1889887370673623,Anthony Pawson),(8830299306937918434,University of California, Berkeley),0)</p>
+<hr>
+<p>PageRank 计算,获取最有价值的数据</p>
+<hr>
+<p>University of California, Berkeley: 1321.111754312097<br>Berkeley, California: 664.8841977233583<br>Uc berkeley: 162.50132743397873<br>Berkeley Software Distribution: 90.4786038848606<br>Lawrence Berkeley National Laboratory: 81.90404939641944<br>George Berkeley: 81.85226118457985<br>Busby Berkeley: 47.871998218019655<br>Berkeley Hills: 44.76406979519754<br>Xander Berkeley: 30.324075347288037<br>Berkeley County, South Carolina: 28.908336483710308<br>16/07/16 19:12:55 INFO RemoteActorRefProvider$RemotingTerminator: Shutting down remote daemon.</p>
+<p>Process finished with exit code 0</p>
 
       
     </div>
@@ -338,17 +405,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/14/系统架构-1/" rel="next" title="系统架构(1) ">
-                <i class="fa fa-chevron-left"></i> 系统架构(1) 
+              <a href="/2016/07/16/系统架构2/" rel="next" title="系统架构2">
+                <i class="fa fa-chevron-left"></i> 系统架构2
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/16/系统架构2/" rel="prev" title="系统架构2">
-                系统架构2 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
