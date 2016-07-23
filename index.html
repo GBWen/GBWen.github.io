@@ -270,6 +270,200 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/23/7-22-7-23/" itemprop="url">
+                  7.22-7.23
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-23T18:25:42+08:00" content="2016-07-23">
+              2016-07-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>学习<a href="https://github.com/Unknwon/go-fundamental-programming" target="_blank" rel="external">https://github.com/Unknwon/go-fundamental-programming</a><br>golang的基本语法</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/23/7-17-7-21/" itemprop="url">
+                  7.17-7.21
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-23T18:23:30+08:00" content="2016-07-23">
+              2016-07-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="DVID连接NeuTube"><a href="#DVID连接NeuTube" class="headerlink" title="DVID连接NeuTube"></a>DVID连接NeuTube</h1><p>注册自定义协议处理程序，新建neutube.desktop把参数“neptune://…”传给neutu.desktop，调用脚本neutu.sh，处理掉“neptune://”，取到实际图片的地址，传到neuTube里面打开</p>
+<p>1./usr/share/applications/defaults.list<br>增加x-scheme-handler/neutu=neutu.desktop</p>
+<p>2./usr/share/applications/新建neutudesktop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Desktop Entry]</div><div class="line">Name = neutu</div><div class="line">Exec = neutu.sh %u</div><div class="line">Type = Application</div></pre></td></tr></table></figure>
+<p>3.neuTube 执行文件放到/usr/bin</p>
+<p>4./usr/新建neutu.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">	STR = <span class="variable">$1</span></div><div class="line">	STR = <span class="variable">$&#123;STR##neutu:\/\/&#125;</span></div><div class="line">	neuTube <span class="variable">$STR</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/16/7-16/" itemprop="url">
                   7.16
                 </a>
@@ -314,65 +508,7 @@
       
         
           <p>Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁<br>易用的而丰富的接口,极大的方便了对分布式图处理的需求。<br>这里写了个PageRank算法的例子<br>PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
-<p>‘’’ scala<br>import org.apache.log4j.{Level, Logger}<br>import org.apache.spark.{SparkContext, SparkConf}<br>import org.apache.spark.graphx._</p>
-<p>/**</p>
-<ul>
-<li>Created by gbw on 16-7-16.<br>*/</li>
-</ul>
-<p>import org.apache.spark.rdd.RDD<br>object PageRank<br>{<br>    def main(args: Array[String])<br>    {<br>        //屏蔽日志<br>        Logger.getLogger(“org.apache.spark”).setLevel(Level.WARN)<br>        Logger.getLogger(“org.eclipse.jetty.server”).setLevel(Level.OFF)</p>
-<pre><code>    //设置运行环境
-    val conf = new SparkConf().setAppName(&quot;PageRank&quot;).setMaster(&quot;local&quot;)
-    val sc = new SparkContext(conf)
-
-    //读入数据文件
-    val articles: RDD[String] =
-        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-vertices.txt&quot;)
-    val links: RDD[String] =
-        sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-edges.txt&quot;)
-
-    //装载顶点和边
-    val vertices = articles.map
-    {
-        line =&gt;
-            val fields = line.split(&apos;\t&apos;)
-            (fields(0).toLong, fields(1))
-    }
-    val edges = links.map
-    {
-        line =&gt;
-            val fields = line.split(&apos;\t&apos;)
-            Edge(fields(0).toLong, fields(1).toLong, 0)
-    }
-
-    //cache 操作
-    //val graph = Graph(vertices, edges, &quot;&quot;).persist(StorageLevel.MEMORY_ONLY_SER)
-    val graph = Graph(vertices, edges, &quot;&quot;).persist()
-
-    //测试
-    println(&quot;**********************************************************&quot;)
-    println(&quot;获取 5 个 triplet 信息&quot;)
-    println(&quot;**********************************************************&quot;)
-    graph.triplets.take(5).foreach(println(_))
-
-    //pageRank 算法里面的时候使用了 cache(),故前面 persist 的时候只能使用MEMORY_ONLY
-    println(&quot;**********************************************************&quot;)
-    println(&quot;PageRank 计算,获取最有价值的数据&quot;)
-    println(&quot;**********************************************************&quot;)
-
-    val prGraph = graph.pageRank(0.001).cache()
-    val titleAndPrGraph = graph.outerJoinVertices(prGraph.vertices)
-    {
-        (v, title, rank) =&gt; (rank.getOrElse(0.0), title)
-    }
-
-    titleAndPrGraph.vertices.top(10)
-    {
-        Ordering.by((entry: (VertexId, (Double, String))) =&gt; entry._2._1)
-    }.foreach(t =&gt; println(t._2._2 + &quot;: &quot; + t._2._1))
-
-    sc.stop()
-}
-</code></pre><p>}<br>‘’’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import org.apache.log4j.&#123;Level, Logger&#125;</div><div class="line">import org.apache.spark.&#123;SparkContext, SparkConf&#125;</div><div class="line">import org.apache.spark.graphx._</div><div class="line"></div><div class="line">/**</div><div class="line">  * Created by gbw on 16-7-16.</div><div class="line">  */</div><div class="line"></div><div class="line"></div><div class="line">import org.apache.spark.rdd.RDD</div><div class="line">object PageRank</div><div class="line">&#123;</div><div class="line">	def main(args: Array[String])</div><div class="line">	&#123;</div><div class="line">		//屏蔽日志</div><div class="line">		Logger.getLogger(&quot;org.apache.spark&quot;).setLevel(Level.WARN)</div><div class="line">		Logger.getLogger(&quot;org.eclipse.jetty.server&quot;).setLevel(Level.OFF)</div><div class="line"></div><div class="line">		//设置运行环境</div><div class="line">		val conf = new SparkConf().setAppName(&quot;PageRank&quot;).setMaster(&quot;local&quot;)</div><div class="line">		val sc = new SparkContext(conf)</div><div class="line"></div><div class="line">		//读入数据文件</div><div class="line">		val articles: RDD[String] =</div><div class="line">			sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-vertices.txt&quot;)</div><div class="line">		val links: RDD[String] =</div><div class="line">			sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-edges.txt&quot;)</div><div class="line"></div><div class="line">		//装载顶点和边</div><div class="line">		val vertices = articles.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				val fields = line.split(&apos;\t&apos;)</div><div class="line">				(fields(0).toLong, fields(1))</div><div class="line">		&#125;</div><div class="line">		val edges = links.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				val fields = line.split(&apos;\t&apos;)</div><div class="line">				Edge(fields(0).toLong, fields(1).toLong, 0)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		//cache 操作</div><div class="line">		//val graph = Graph(vertices, edges, &quot;&quot;).persist(StorageLevel.MEMORY_ONLY_SER)</div><div class="line">		val graph = Graph(vertices, edges, &quot;&quot;).persist()</div><div class="line"></div><div class="line">		//测试</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		println(&quot;获取 5 个 triplet 信息&quot;)</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		graph.triplets.take(5).foreach(println(_))</div><div class="line"></div><div class="line">		//pageRank 算法里面的时候使用了 cache(),故前面 persist 的时候只能使用MEMORY_ONLY</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		println(&quot;PageRank 计算,获取最有价值的数据&quot;)</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line"></div><div class="line">		val prGraph = graph.pageRank(0.001).cache()</div><div class="line">		val titleAndPrGraph = graph.outerJoinVertices(prGraph.vertices)</div><div class="line">		&#123;</div><div class="line">			(v, title, rank) =&gt; (rank.getOrElse(0.0), title)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		titleAndPrGraph.vertices.top(10)</div><div class="line">		&#123;</div><div class="line">			Ordering.by((entry: (VertexId, (Double, String))) =&gt; entry._2._1)</div><div class="line">		&#125;.foreach(t =&gt; println(t._2._2 + &quot;: &quot; + t._2._1))</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>输出：</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/07/16/7-16/#more" rel="contents">
@@ -1102,201 +1238,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/12/7-12(2)/" itemprop="url">
-                  7-12(2)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T13:31:00+08:00" content="2016-07-12">
-              2016-07-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>SparkStreaming<br>终于搞定了Demo<br>生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.&#123;<span class="type">PrintWriter</span>&#125;</div><div class="line"><span class="keyword">import</span> java.net.<span class="type">ServerSocket</span></div><div class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="comment">// 定义随机获取整数的方法</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span></span>(length: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">import</span> java.util.<span class="type">Random</span></div><div class="line">		<span class="keyword">val</span> rdm = <span class="keyword">new</span> <span class="type">Random</span></div><div class="line">		rdm.nextInt(length)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line"></div><div class="line">		<span class="comment">// 调用该模拟器需要三个参数，分为为文件路径、端口号和间隔时间（单位：毫秒）</span></div><div class="line">		<span class="keyword">if</span> (args.length != <span class="number">3</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.println(<span class="string">"Usage: &lt;filename&gt; &lt;port&gt; &lt;millisecond&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 获取指定文件总的行数</span></div><div class="line">		<span class="keyword">val</span> filename = args(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> lines = <span class="type">Source</span>.fromFile(filename).getLines.toList</div><div class="line">		<span class="keyword">val</span> filerow = lines.length</div><div class="line"></div><div class="line">		<span class="comment">// 指定监听某端口，当外部程序请求时建立连接</span></div><div class="line">		<span class="keyword">val</span> listener = <span class="keyword">new</span> <span class="type">ServerSocket</span>(args(<span class="number">1</span>).toInt)</div><div class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">val</span> socket = listener.accept()</div><div class="line">			<span class="keyword">new</span> <span class="type">Thread</span>()</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span> </span>=</div><div class="line">				&#123;</div><div class="line">					println(<span class="string">"Got client connected from: "</span> + socket.getInetAddress)</div><div class="line">					<span class="keyword">val</span> out = <span class="keyword">new</span> <span class="type">PrintWriter</span>(socket.getOutputStream, <span class="literal">true</span>)</div><div class="line">					<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">					&#123;</div><div class="line">						<span class="type">Thread</span>.sleep(args(<span class="number">2</span>).toLong)</div><div class="line">						<span class="comment">// 当该端口接受请求时，随机获取某行数据发送给对方</span></div><div class="line">						<span class="keyword">val</span> content = lines(index(filerow))</div><div class="line">						println(content)</div><div class="line">						out.write(content + '\n')</div><div class="line">						out.flush()</div><div class="line">					&#125;</div><div class="line">					socket.close()</div><div class="line">				&#125;</div><div class="line">			&#125;.start()</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/12/7-12(2)/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/12/7-12/" itemprop="url">
-                  7.12
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T10:17:31+08:00" content="2016-07-12">
-              2016-07-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>统计平均年龄<br>首先生成数据：Gen.scala<br>生成1000000个人的0-99年龄<br>每一行 i + rand(100)<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">  * Created by gbw on 16-7-10.</div><div class="line">  */</span></div><div class="line"><span class="keyword">import</span> java.io.<span class="type">FileWriter</span></div><div class="line"><span class="keyword">import</span> java.io.<span class="type">File</span></div><div class="line"><span class="keyword">import</span> scala.util.<span class="type">Random</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> writer = <span class="keyword">new</span> <span class="type">FileWriter</span>(<span class="keyword">new</span> <span class="type">File</span>(<span class="string">"/home/gbw/sample_age_data.txt"</span>),<span class="literal">false</span>)</div><div class="line">		<span class="keyword">val</span> rand = <span class="keyword">new</span> <span class="type">Random</span>()</div><div class="line">		<span class="keyword">for</span> ( i &lt;- <span class="number">1</span> to <span class="number">1000000</span>)</div><div class="line">		&#123;</div><div class="line">			writer.write( i + <span class="string">" "</span> + rand.nextInt(<span class="number">100</span>))</div><div class="line">			writer.write(<span class="type">System</span>.getProperty(<span class="string">"line.separator"</span>))</div><div class="line">		&#125;</div><div class="line">		writer.flush()</div><div class="line">		writer.close()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Spark计算平均年龄</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/12/7-12/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1342,7 +1283,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
