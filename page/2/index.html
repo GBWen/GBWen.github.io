@@ -270,6 +270,103 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/12/7-12(3)/" itemprop="url">
+                  7-12(3)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-12T15:56:55+08:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Spark MLlib 封装的很好的，上手并不难，写了个简单的Kmeans 聚类</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.clustering.<span class="type">KMeans</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Kmeans</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">WARN</span>)</div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.eclipse.jetty.server"</span>).setLevel(<span class="type">Level</span>.<span class="type">OFF</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"MyKmeans"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">// 装载数据集</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/input"</span>, <span class="number">1</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map(s =&gt; <span class="type">Vectors</span>.dense(s.split(' ').map(_.toDouble)))</div><div class="line"></div><div class="line">		<span class="comment">// 将数据集聚类,2 个类,20 次迭代,进行模型训练形成数据模型</span></div><div class="line">		<span class="keyword">val</span> numClusters = <span class="number">2</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">20</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">KMeans</span>.train(parsedData, numClusters, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">// 打印数据模型的中心点</span></div><div class="line">		println(<span class="string">"Cluster centers:"</span>)</div><div class="line">		<span class="keyword">for</span> (c &lt;- model.clusterCenters)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">" "</span> + c.toString)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 使用误差平方之和来评估数据模型</span></div><div class="line">		<span class="keyword">val</span> cost = model.computeCost(parsedData)</div><div class="line">		println(<span class="string">"Within Set Sum of Squared Errors = "</span> + cost)</div><div class="line"></div><div class="line">		<span class="comment">// 使用模型测试单点数据</span></div><div class="line">		println(<span class="string">"Vectors 0.2 0.2 0.2 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"0.2 0.2 0.2"</span>.split(' ').map(_.toDouble))))</div><div class="line">		println(<span class="string">"Vectors 0.25 0.25 0.25 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"0.25 0.25 0.25"</span>.split(' ').map(_.toDouble))))</div><div class="line">		println(<span class="string">"Vectors 8 8 8 is belongs to clusters:"</span> + model.predict(<span class="type">Vectors</span>.dense(<span class="string">"8 8 8"</span>.split(' ').map(_.toDouble))))</div><div class="line">		<span class="keyword">val</span> testdata = data.map(s =&gt; <span class="type">Vectors</span>.dense(s.split(' ').map(_.toDouble)))</div><div class="line">		<span class="keyword">val</span> result1 = model.predict(testdata)</div><div class="line">		result1.saveAsTextFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/result_kmeans1"</span>)</div><div class="line"></div><div class="line">		<span class="comment">// 交叉评估 2,返回数据集和结果</span></div><div class="line">		<span class="keyword">val</span> result2 = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> linevectore = <span class="type">Vectors</span>.dense(line.split(' ').map(_.toDouble))</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(linevectore)</div><div class="line">				line + <span class="string">" "</span> + prediction</div><div class="line">		&#125;.saveAsTextFile(<span class="string">"/home/gbw/Sparkdata/Kmeans/result_kmeans2"</span>)</div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/12/7-12(3)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/12/7-12(2)/" itemprop="url">
                   7-12(2)
                 </a>
@@ -1157,7 +1254,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
