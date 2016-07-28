@@ -96,22 +96,15 @@
 
 
 
-<meta name="description" content="系统架构2我们需要两种形式的基本要求：1.随着实时数据流的建模2.大批量数据分析建模
-Spark架构思路采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark">
-<meta property="og:type" content="article">
-<meta property="og:title" content="系统架构2">
-<meta property="og:url" content="http://yoursite.com/2016/07/16/系统架构2/index.html">
+<meta name="description" content="Scala,Spark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GBW's Blog">
+<meta property="og:url" content="http://yoursite.com/archives/2016/page/3/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="系统架构2我们需要两种形式的基本要求：1.随着实时数据流的建模2.大批量数据分析建模
-Spark架构思路采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark">
-<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/Lambda.png">
-<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/architecture2.png">
-<meta property="og:updated_time" content="2016-07-16T11:08:50.284Z">
+<meta property="og:description" content="Scala,Spark">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="系统架构2">
-<meta name="twitter:description" content="系统架构2我们需要两种形式的基本要求：1.随着实时数据流的建模2.大批量数据分析建模
-Spark架构思路采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark">
-<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/Lambda.png">
+<meta name="twitter:title" content="GBW's Blog">
+<meta name="twitter:description" content="Scala,Spark">
 
 
 
@@ -132,9 +125,9 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/16/系统架构2/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2016/page/3/"/>
 
-  <title> 系统架构2 | GBW's Blog </title>
+  <title> 归档 | GBW's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -155,7 +148,7 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  page-archive  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,122 +246,70 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共计 21 篇日志。 继续努力。
+    </span>
+
     
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                系统架构2
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-16T19:04:45+08:00" content="2016-07-16">
-              2016-07-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
-      
-        <h1 id="系统架构2"><a href="#系统架构2" class="headerlink" title="系统架构2"></a>系统架构2</h1><p>我们需要两种形式的基本要求：<br>1.随着实时数据流的建模<br>2.大批量数据分析建模</p>
-<h2 id="Spark架构思路"><a href="#Spark架构思路" class="headerlink" title="Spark架构思路"></a>Spark架构思路</h2><p>采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)<br>在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark平台是开发的GraphX（图计算框架）和MLlib（机器学习库）都可以直接用于批量的数据分析，极大的方便了应用程序的开发和维护。<br>服务层可以利用SparkSQL等索引服务针对批量处理层的结果进行索引，接受外部查询请求，完成SQL查询任务。<br>速度层采用分布式的流处理平台Spark Streaming，作为批量处理层高延迟响应的补充，可实时计算数据完成处理。<br><img src="http://oa4pac8sx.bkt.clouddn.com/Lambda.png" alt="enter image description here"></p>
-<h2 id="平台整体架构"><a href="#平台整体架构" class="headerlink" title="平台整体架构"></a>平台整体架构</h2><p>重点关注Spark平台机器学习算法的实现，设计目标是应对高分辨率图像数据下机器学习任务的挑战，同时适应流数据的特点，基于Spark Streaming 框架上设计在线机器学习算法。<br>底层为Spark平台的基础设施，上层为设计和实现机器学习算法的框架层，其中部分算法依赖GraphX和Saprk Streaming框架，在框架层之上是Web服务接口层，主要封装各个算法的操作和调用接口，以Web Service的忌口方式暴露给外部使用，提供发送请求。<br><img src="http://oa4pac8sx.bkt.clouddn.com/architecture2.png" alt="enter image description here"></p>
-
-      
-    </div>
-
-    <div>
       
         
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/07/15/7-15/" rel="next" title="7-15">
-                <i class="fa fa-chevron-left"></i> 7-15
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/16/7-16/" rel="prev" title="7.16">
-                7.16 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
         </div>
       
+      
 
       
-      
-    </footer>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2016/07/05/Plan/" itemprop="url">
+              
+                <span itemprop="name">Plan</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-07-05T14:24:09+08:00"
+              content="2016-07-05" >
+          07-05
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+    
+
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2016/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2016/">1</a><a class="page-number" href="/archives/2016/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+
 
 
           </div>
@@ -376,10 +317,6 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -399,17 +336,8 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oa4pac8sx.bkt.clouddn.com/u=4284545010,775528643&fm=21&gp=0.jpg"
@@ -490,17 +418,6 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#系统架构2"><span class="nav-number">1.</span> <span class="nav-text">系统架构2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark架构思路"><span class="nav-number">1.1.</span> <span class="nav-text">Spark架构思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#平台整体架构"><span class="nav-number">1.2.</span> <span class="nav-text">平台整体架构</span></a></li></ol></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -604,9 +521,11 @@ Spark架构思路采用混合架构模式：Lambda Architecture，其主要提�
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   

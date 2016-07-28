@@ -1,0 +1,633 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
+Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7.26-7.28">
+<meta property="og:url" content="http://yoursite.com/2016/07/28/7-26-7-28/index.html">
+<meta property="og:site_name" content="GBW's Blog">
+<meta property="og:description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
+Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
+<meta property="og:updated_time" content="2016-07-28T06:10:38.317Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7.26-7.28">
+<meta name="twitter:description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
+Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/28/7-26-7-28/"/>
+
+  <title> 7.26-7.28 | GBW's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GBW's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Write 1000 Lines a Day to Change My Life!  ٩( 'ω' )و</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                7.26-7.28
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T13:52:02+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作<br>学习使用Spark streaming进行实时的统计计算<br>下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。</p>
+<p>Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spark2.0的新特性，试着把写的子程序整合在Spark2.0的版本上，做好后我再写一个总结报告发给老师。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">Row</span>, <span class="type">SQLContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.types.&#123;<span class="type">StringType</span>, <span class="type">StructField</span>, <span class="type">StructType</span>, _&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">ImageSQL</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//private val schemaString = "id,gender,height"</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">val</span> schemaString = <span class="string">"name,type,size"</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">1</span>)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">"Usage:ImageData filePath"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Image Data Test"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDataRDD</span> = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> sqlCtx = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line">		<span class="comment">// this is used to implicitly convert an RDD to a DataFrame.</span></div><div class="line">		<span class="keyword">import</span> sqlCtx.implicits._</div><div class="line">		<span class="keyword">val</span> schemaArray = schemaString.split(<span class="string">","</span>)</div><div class="line">		<span class="keyword">val</span> schema = <span class="type">StructType</span>(schemaArray.map(fieldName =&gt; <span class="type">StructField</span>(fieldName, <span class="type">StringType</span>, <span class="literal">true</span>)))</div><div class="line">		<span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = <span class="type">ImageDataRDD</span>.map(_.split(<span class="string">" "</span>)).map(eachRow =&gt; <span class="type">Row</span>(eachRow(<span class="number">0</span>), eachRow(<span class="number">1</span>), eachRow(<span class="number">2</span>)))</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDF</span> = sqlCtx.createDataFrame(rowRDD, schema)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.registerTempTable(<span class="string">"Image"</span>)</div><div class="line">		<span class="keyword">val</span> lagerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb: "</span> + lagerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #1&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="keyword">val</span> bmpLargerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100 and type='bmp'"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb and type is bmp: "</span> + bmpLargerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #2&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.groupBy(<span class="type">ImageDF</span>(<span class="string">"type"</span>)).count().show()</div><div class="line">		println(<span class="string">"Image Count Grouped By type"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #3&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.filter(<span class="type">ImageDF</span>(<span class="string">"type"</span>).equalTo(<span class="string">"png"</span>)).filter(<span class="type">ImageDF</span>(<span class="string">"size"</span>) &gt; <span class="number">200</span>).show()</div><div class="line">		println(<span class="string">"Png which size is more than 200"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #4&gt;"</span>)</div><div class="line"></div><div class="line"><span class="comment">//		ImageDF.sort($"size".desc).take(2).foreach &#123; row =&gt; println(row(0) + "," + row(1) + "," + row(2)) &#125;</span></div><div class="line"><span class="comment">//		println("Sorted the Image by size in descend order,Show top 2 Image")</span></div><div class="line"><span class="comment">//		println("&lt;Display #5&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("jpg")).agg(Map("size" -&gt; "avg")).show()</span></div><div class="line"><span class="comment">//		println("The Average size for jpg")</span></div><div class="line"><span class="comment">//		println("&lt;Display #6&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("bmp")).agg("size" -&gt; "max").show()</span></div><div class="line"><span class="comment">//		println("The Max size of bmp:")</span></div><div class="line"><span class="comment">//		println("&lt;Display #7&gt;")</span></div><div class="line"></div><div class="line">		println(<span class="string">"All the statistics actions are finished on structured Image data."</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>spark-submit运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-submit --class ImageSQL --master spark://localhost:7077 /home/gbw/Sparkjar/SparkSQLImage.jar hdfs://localhost:9000/gbw/input/Images/Image.txt</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/26/7-24-7-25/" rel="next" title="7.24-7.25">
+                <i class="fa fa-chevron-left"></i> 7.24-7.25
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oa4pac8sx.bkt.clouddn.com/u=4284545010,775528643&fm=21&gp=0.jpg"
+               alt="GBW" />
+          <p class="site-author-name" itemprop="name">GBW</p>
+          <p class="site-description motion-element" itemprop="description">Scala,Spark</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GBWen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/u/5660562931" target="_blank" title="曾经博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  曾经博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://user.qzone.qq.com/376366210" target="_blank" title="QQ空间">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  QQ空间
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/guan-bo-wen-98" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GBW</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
