@@ -271,7 +271,7 @@
               
                 
                 <a class="post-title-link" href="/2016/09/13/Spark-架构实现/" itemprop="url">
-                  Spark �ܹ�ʵ��
+                  Spark 架构实现
                 </a>
               
             
@@ -367,7 +367,7 @@
               
                 
                 <a class="post-title-link" href="/2016/09/13/DVID-加载高分辨率图片/" itemprop="url">
-                  DVID ���ظ߷ֱ���ͼ��
+                  DVID 加载高分辨率图像
                 </a>
               
             
@@ -411,12 +411,12 @@
         
           
             <ol>
-<li>ʹ�� fiji ����ʦ���� tif �ֳ� 99 �� png��<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_1.png" alt="enter image description here"></li>
-<li>��������ѧУ�ķ������Ƚϲ�����,�����ҵĵ����������´ dvid,���Ű�ͼƬ���ؽ�����dvid ��һ���趨���Ǽ���ͼƬ�����ȴ� 20s,����ͼƬ��С��ԭ�� 20s ���ܲ�̫��,û���ҵ����õĵط�,�Ҿͷ�����ͼƬ���ؽ�ȥ�ˡ�</li>
-<li>��ʱ������һ���������� dvid ����ͼƬ���Ǻ��ȶ�,����������ʱ������,��Ҫ���������������ٴμ��ء�</li>
-<li>ȫ��������Ч������,����������ʾ��ͼ����<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_2.png" alt="enter image description here"></li>
-<li>�����Դ���һЩ����,��ʾͼƬ�ķ�Χ����(1600*1600+)��ʱ��,ͼƬ������û�дӷ��������ؽ������Կ������ź��Ŵӷ��������յ�����<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_3.png" alt="enter image description here"><br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_4.png" alt="enter image description here"></li>
-<li>���и��¾���ͼƬ��С�� 2000<em>4000 ��,���ǵ��ò�����ʾ������ 4000</em>4000 ��,���Կ����������������� 4000 ���ȵ�����,��Ȼ���ص���ȫ�ڵĿ顣���������п��Կ�����ʾͼƬ�������� 2000*4000,û����,�����ǵ��ò�����ʱ�򳤿�д��������<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_5.png" alt="enter image description here"></li>
+<li>使用 fiji 把老师给的 tif 分成 99 张 png。<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_1.png" alt="enter image description here"></li>
+<li>由于链接学校的服务器比较不方便,我在我的电脑上面重新搭建 dvid,试着把图片加载进来。dvid 有一个设定就是加载图片最多等待 20s,但是图片大小的原因 20s 可能不太够,没有找到设置的地方,我就分批把图片加载进去了。</li>
+<li>这时候发现一个问题就是 dvid 加载图片不是很稳定,连续加载有时候卡死,需要重启服务器才能再次加载。</li>
+<li>全部载入后效果如下,基本可以显示出图像。<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_2.png" alt="enter image description here"></li>
+<li>但是仍存在一些问题,显示图片的范围过大(1600*1600+)的时候,图片的数据没有从服务器加载进来可以看到缩放后才从服务器接收到数据<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_3.png" alt="enter image description here"><br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_4.png" alt="enter image description here"></li>
+<li>还有个事就是图片大小是 2000<em>4000 的,但是调用插件显示出的是 4000</em>4000 的,可以看到在向服务器请求 4000 宽度的数据,当然返回的是全黑的块。在浏览器中可以看到显示图片载入的是 2000*4000,没问题,可能是调用插件的时候长宽写的有问题<br><img src="http://oa4pac8sx.bkt.clouddn.com/8.6_5.png" alt="enter image description here"></li>
 </ol>
 
           
