@@ -270,6 +270,127 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/14/系统架构-1/" itemprop="url">
+                  系统架构(1) 
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-14T10:53:05+08:00" content="2016-07-14">
+              2016-07-14
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h1><p>最近学习了Spark及其生态圈的一些介绍，他的功能很强大，而且通用性很强，感觉使用这一套东西就可以达到我们的要求，而且开发和维护上会方便很多。<br><img src="http://oa4pac8sx.bkt.clouddn.com/overall.png" alt="enter image description here"></p>
+<h2 id="数据存储，资源调度"><a href="#数据存储，资源调度" class="headerlink" title="数据存储，资源调度"></a>数据存储，资源调度</h2><p>数据持久化存储在HDFS上，在最底层的分布式文件存储和上层的各种计算框架之间使用中间件Tachyon，将那些不需要落地到HDFS里的文件落地到分布式内存文件系统中来达到共享内存，从而提高效率。以 Standalone或YARN为资源管理器调度 Job 完成 Spark 应用程序的计算。</p>
+<h2 id="计算引擎"><a href="#计算引擎" class="headerlink" title="计算引擎"></a>计算引擎</h2><p>以 Spark Core提供的内存计算框架为核心， 使用Spark Streaming做实时处理应用， 监听对应Socket端口，当有图像处理请求时读取图片，调用基于MLlib的机器学习方法库，对图片进行处理后存储回文件系统，显示到客户端上。使用Spark SQL做及时查询。</p>
+<h2 id="Tachyno"><a href="#Tachyno" class="headerlink" title="Tachyno"></a>Tachyno</h2><p>使用Tachyon这一分布式内存文件系统,可以在集群里以访问内存的速度来访问存在Tachyon里的文件。Tachyon是架构在最底层的分布式文件存储和上层的各种<br>计算框架之间的一种中间件,其主要职责是将那些不需要落地到DFS里的文件落地到分布式内存文件系统中来达到共享内存,从而提高效率。同时可以减少内存冗余、GC时间等</p>
+<p>Tachyon 在 Spark 平台的部署：总的来说，Tachyon 有三个主要的部件：Master， Client，与 Worker。在每个 Spark Worker 节点上，都部署了一个 Tachyon Worker，Spark Worker 通过 Tachyon Client 访问 Tachyon 进行数据读写。所有的 Tachyon Worker 都被 Tachyon Master所管理，Tachyon Master 通过 Tachyon Worker 定时发出的心跳来判断 Worker 是否已经崩溃以及每个 Worker 剩余的内存空间量。<br><img src="http://oa4pac8sx.bkt.clouddn.com/tachyon.jpg" alt="enter image description here"></p>
+<h2 id="Standalone"><a href="#Standalone" class="headerlink" title="Standalone"></a>Standalone</h2><ol>
+<li>SparkContext 连接到 Master，向 Master 注册并申请资源（CPU Core 和 Memory）；</li>
+<li>Master根据 SparkContext的资源申请要求和 Worker心跳周期内报告的信息决定在哪个Worker 上分配资源，然后在该 Worker 上获取资源，然后启动StandaloneExecutorBackend；</li>
+<li>StandaloneExecutorBackend 向 SparkContext 注册；</li>
+<li>SparkContext 将 Applicaiton 代码发送给 StandaloneExecutorBackend；并且<br>SparkContext 解析 Applicaiton 代码，构建 DAG 图，并提交给 DAG Scheduler 分解成<br>Stage（当碰到 Action 操作时，就会催生 Job；每个 Job 中含有 1 个或多个 Stage，Stage一般在获取外部数据和 shuffle 之前产生），然后以 Stage（或者称为 TaskSet）提交给Task Scheduler，Task Scheduler 负责将 Task 分配到相应的 Worker，最后提交给<br>StandaloneExecutorBackend 执行；</li>
+<li>StandaloneExecutorBackend 会建立 Executor 线程池，开始执行 Task，并向<br>SparkContext 报告，直至 Task 完成。</li>
+<li>所有 Task 完成后，SparkContext 向 Master 注销，释放资源。<br><img src="http://oa4pac8sx.bkt.clouddn.com/standalone.png" alt="enter image description here"></li>
+</ol>
+<h2 id="Spark-Core"><a href="#Spark-Core" class="headerlink" title="Spark Core"></a>Spark Core</h2><ol>
+<li>构建 Spark Application 的运行环境(启动 SparkContext),SparkContext 向资源管理器(可以是 Standalone、Mesos 或 YARN)注册并申请运行 Executor 资源;</li>
+<li>资源管理器分配 Executor 资源并启动 StandaloneExecutorBackend,Executor 运行情况将随着心跳发送到资源管理器上;</li>
+<li>SparkContext 构建成 DAG 图,将 DAG 图分解成 Stage,并把 Taskset 发送给 Task<br>Scheduler。Executor 向 SparkContext 申请 Task,Task Scheduler 将 Task 发放给<br>Executor 运行同时 SparkContext 将应用程序代码发放给 Executor。</li>
+<li>Task 在 Executor 上运行,运行完毕释放所有资源。<br><img src="http://oa4pac8sx.bkt.clouddn.com/sparkcore.png" alt="enter image description here"></li>
+</ol>
+<h2 id="Spark-Streaming"><a href="#Spark-Streaming" class="headerlink" title="Spark Streaming"></a>Spark Streaming</h2><p>SparkStreaming 是一个对实时数据流进行高通量、容错处理的流式处理系统,可以对多种数据源(如 Kdfka、Flume、Twitter、Zero 和 TCP 套接字)进行类似 Map、Reduce 和 Join等复杂操作,并将结果保存到外部文件系统、数据库或应用到实时仪表盘。计算流程:Spark Streaming 是将流式计算分解成一系列短小的批处理作业。这里的批处理引擎是 Spark Core,也就是把 Spark Streaming 的输入数据按照 batch size(如 1 秒)分成一段一段的数据(Discretized Stream),每一段数据都转换成 Spark 中的 RDD (Resilient Distributed Dataset),然后将 Spark Streaming 中对 DStream 的 Transformation 操作变为针对 Spark 中对 RDD 的 Transformation 操作,将 RDD 经过操作变成中间结果保存在内存中。整个流式计算根据业务的需求可以对中间的结果进行叠加或者存储到外部设备。下图显示了 Spark Streaming 的整个流程。<br><img src="http://oa4pac8sx.bkt.clouddn.com/sparkstreaming.png" alt="enter image description here"></p>
+<h2 id="Spark-SQL"><a href="#Spark-SQL" class="headerlink" title="Spark SQL"></a>Spark SQL</h2><p>类似于关系型数据库,SparkSQL 也是语句也是由 Projection(a1,a2,a3)、Data Source(tableA)、Filter(condition)组成,分别对应 sql 查询过程中的 Result、Data Source、Operation,也就是说 SQL 语句按 Result–&gt;Data Source–&gt;Operation 的次序来描述的。<br>当执行 SparkSQL 语句的顺序为:</p>
+<ol>
+<li>对读入的 SQL 语句进行解析(Parse),分辨出 SQL 语句中哪些词是关键词(如 SELECT、<br>FROM、WHERE),哪些是表达式、哪些是 Projection、哪些是 Data Source 等,从而判断 SQL 语句是否规范;</li>
+<li>将 SQL 语句和数据库的数据字典(列、表、视图等等)进行绑定(Bind),如果相关的Projection、Data Source 等都是存在的话,就表示这个 SQL 语句是可以执行的;</li>
+<li>一般的数据库会提供几个执行计划,这些计划一般都有运行统计数据,数据库会在这些计划中选择一个最优计划(Optimize);</li>
+<li>计划执行(Execute),按 Operation–&gt;Data Source–&gt;Result 的次序来进行的,在执行过程有时候甚至不需要读取物理表就可以返回结果<br><img src="http://oa4pac8sx.bkt.clouddn.com/spqrksql.png" alt="enter image description here"></li>
+</ol>
+<h2 id="Spark-MLlib"><a href="#Spark-MLlib" class="headerlink" title="Spark MLlib"></a>Spark MLlib</h2><p>从架构图可以看出 MLlib 主要包含三个部分:<br>底层基础:包括 Spark 的运行库、矩阵库和向量库;<br>算法库:包含广义线性模型、推荐系统、聚类、决策树和评估的算法;<br>实用程序:包括测试数据的生成、外部数据的读入等功能。<br><img src="http://oa4pac8sx.bkt.clouddn.com/MLlib.png" alt="enter image description here"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/13/7-13(2)/" itemprop="url">
                   7.13(2)
                 </a>
@@ -1119,100 +1240,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/08/7-8/" itemprop="url">
-                  7.8
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-08T17:17:44+08:00" content="2016-07-08">
-              2016-07-08
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Scala基本语法看完<br>想用finagle，sbt安装好编译源代码不过<br>想用play framework没有很好的教程<br>直接上Spark<br>单机Hadoop，Spark搭建<br>写WordCount小程序<br>Spark确实吊，函数式编程还需要多熟悉</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1258,7 +1285,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
