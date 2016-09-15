@@ -96,21 +96,18 @@
 
 
 
-<meta name="description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.i">
+<meta name="description" content="使用https://github.com/janelia-flyem/dvid-console    1.14.4版本的dvid-console就没有之前所说的问题了，可以看到这次使用了新的显示插件Leaflet，而不是OpenSeaDragon，Leaflet网站http://leafletjs.com/，an open-source JavaScript library for mobile-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="7.13(1)">
-<meta property="og:url" content="http://yoursite.com/2016/07/13/7-13(1)/index.html">
+<meta property="og:title" content="DVID 问题解决">
+<meta property="og:url" content="http://yoursite.com/2016/09/15/DVID-问题解决/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.i">
-<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/Browse%20HDFS.png">
-<meta property="og:updated_time" content="2016-07-13T01:56:41.660Z">
+<meta property="og:description" content="使用https://github.com/janelia-flyem/dvid-console    1.14.4版本的dvid-console就没有之前所说的问题了，可以看到这次使用了新的显示插件Leaflet，而不是OpenSeaDragon，Leaflet网站http://leafletjs.com/，an open-source JavaScript library for mobile-">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-09-15%2009:23:18%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
+<meta property="og:updated_time" content="2016-09-15T01:26:31.403Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7.13(1)">
-<meta name="twitter:description" content="HDFS写回怎么也查不到查看Spark源码里面的函数saveAsHadoopFile终于解决写了个简单的WordCount从hdfs://localhost:9000/gbw/input/…读写回hdfshdfs://localhost:9000/tmp…
-123456789101112131415161718192021222324252627import org.apache.hadoop.i">
-<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/Browse%20HDFS.png">
+<meta name="twitter:title" content="DVID 问题解决">
+<meta name="twitter:description" content="使用https://github.com/janelia-flyem/dvid-console    1.14.4版本的dvid-console就没有之前所说的问题了，可以看到这次使用了新的显示插件Leaflet，而不是OpenSeaDragon，Leaflet网站http://leafletjs.com/，an open-source JavaScript library for mobile-">
+<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/2016-09-15%2009:23:18%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
 
 
 
@@ -131,9 +128,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/13/7-13(1)/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/09/15/DVID-问题解决/"/>
 
-  <title> 7.13(1) | GBW's Blog </title>
+  <title> DVID 问题解决 | GBW's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +270,7 @@
             
             
               
-                7.13(1)
+                DVID 问题解决
               
             
           </h1>
@@ -285,8 +282,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-13T09:47:18+08:00" content="2016-07-13">
-              2016-07-13
+            <time itemprop="dateCreated" datetime="2016-09-15T08:59:48+08:00" content="2016-09-15">
+              2016-09-15
             </time>
           </span>
 
@@ -313,13 +310,8 @@
       
 
       
-        <p>HDFS写回怎么也查不到<br>查看Spark源码里面的函数saveAsHadoopFile终于解决<br>写了个简单的WordCount<br>从hdfs://localhost:9000/gbw/input/…读<br>写回hdfshdfs://localhost:9000/tmp…</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.hadoop.io.&#123;<span class="type">IntWritable</span>, <span class="type">Text</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.hadoop.mapred.<span class="type">TextOutputFormat</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-13.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">WordCount</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">FILE_NAME</span></span>: <span class="type">String</span> =<span class="string">"word_count_results"</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">2</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.print(<span class="string">"Usage: &lt;Input File dir&gt; &lt;Output File dir&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Word count"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> textFile = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> wordCounts = textFile.flatMap(line =&gt; line.split(<span class="string">" "</span>)).map(word =&gt; (word,<span class="number">1</span>)).reduceByKey((a,b) =&gt; a+b)</div><div class="line">		<span class="comment">//wordCounts.saveAsTextFile(FILE_NAME + System.currentTimeMillis())</span></div><div class="line">		wordCounts.saveAsHadoopFile(args(<span class="number">1</span>),classOf[<span class="type">Text</span>],classOf[<span class="type">IntWritable</span>],classOf[<span class="type">TextOutputFormat</span>[<span class="type">Text</span>,<span class="type">IntWritable</span>]])</div><div class="line">		println(<span class="string">"Word count successfully saved!"</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>执行命令：</p>
-<pre><code>./spark-submit --class WordCount --master spark://localhost:7077 /home/gbw/Sparkjar/HDFSReadWriteWordCount.jar hdfs://localhost:9000/gbw/input/wordCountInput hdfs://localhost:9000/tmp/Word_count_result
-</code></pre><p>结果：<br>可以在<a href="http://localhost:50070/explorer.html#/tmp" target="_blank" rel="external">Browsing HDFS</a>看到<br>地址是<a href="http://localhost:50070/explorer.html#/tmp" target="_blank" rel="external">http://localhost:50070/explorer.html#/tmp</a></p>
-<p><img src="http://oa4pac8sx.bkt.clouddn.com/Browse%20HDFS.png" alt="enter image description here"></p>
+        <p>使用<a href="https://github.com/janelia-flyem/dvid-console" target="_blank" rel="external">https://github.com/janelia-flyem/dvid-console</a>    1.14.4版本的dvid-console就没有之前所说的问题了，可以看到这次使用了新的显示插件Leaflet，而不是OpenSeaDragon，Leaflet网站<a href="http://leafletjs.com/，an" target="_blank" rel="external">http://leafletjs.com/，an</a> open-source JavaScript library for mobile-friendly interactive maps，但是dvid-console这个版本没有缩放功能，先放下吧，先进行下去</p>
+<p><img src="http://oa4pac8sx.bkt.clouddn.com/2016-09-15%2009:23:18%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"></p>
 
       
     </div>
@@ -345,17 +337,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/12/Plan2/" rel="next" title="Plan2">
-                <i class="fa fa-chevron-left"></i> Plan2
+              <a href="/2016/09/13/Spark-架构实现/" rel="next" title="Spark 架构实现">
+                <i class="fa fa-chevron-left"></i> Spark 架构实现
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/13/7-13(2)/" rel="prev" title="7.13(2)">
-                7.13(2) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
