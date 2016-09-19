@@ -270,6 +270,110 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/19/9-20近期安排/" itemprop="url">
+                  9.20近期安排
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-19T20:29:53+08:00" content="2016-09-19">
+              2016-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>仔细浏览下面的技术资料，结合GIS和google、baidu地图服务中的图片服务器架构</p>
+<p>基于DVID的大数据神经元重建系统</p>
+<p>服务器端DVID存储大型多通道神经元图像数据及辅助类型，如多分辨率图像数据和神经元（SWC）模型数据等</p>
+<p>网页客户端支持图像和模型数据的浏览 (参考neuTube）</p>
+<p>计算服务系统支持自动分配计算资源对图像数据进行自动重建，产生神经元模型 （使用SPARK）</p>
+<p>NeuTu客户端支持图像和模型数据的浏览，并对模型的数据进行修正。网页客户端也可支持部分修正功能。</p>
+<p>SWC定义：<a href="http://research.mssm.edu/cnic/swc.html" target="_blank" rel="external">http://research.mssm.edu/cnic/swc.html</a></p>
+<p>参考文献：</p>
+<p>CATMAID</p>
+<p>neuTube: <a href="http://eneuro.org/content/2/1/ENEURO.0049-14.2014" target="_blank" rel="external">http://eneuro.org/content/2/1/ENEURO.0049-14.2014</a></p>
+<p>DVID-SPARK: <a href="https://github.com/janelia-flyem/DVIDSparkServices" target="_blank" rel="external">https://github.com/janelia-flyem/DVIDSparkServices</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/15/DVID-问题解决/" itemprop="url">
                   DVID 问题解决
                 </a>
@@ -1134,102 +1238,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/16/系统架构2/" itemprop="url">
-                  系统架构2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-16T19:04:45+08:00" content="2016-07-16">
-              2016-07-16
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="系统架构2"><a href="#系统架构2" class="headerlink" title="系统架构2"></a>系统架构2</h1><p>我们需要两种形式的基本要求：<br>1.随着实时数据流的建模<br>2.大批量数据分析建模</p>
-<h2 id="Spark架构思路"><a href="#Spark架构思路" class="headerlink" title="Spark架构思路"></a>Spark架构思路</h2><p>采用混合架构模式：Lambda Architecture，其主要提供三个层次：批量处理层(Batch Layer)、服务层(Serving Layer)、速度层(Speed Layer)<br>在批量处理层，选用Spark，其基于内存的特点使得它更适合大量迭代的机器学习和复杂的数据处理，而且在Spark平台是开发的GraphX（图计算框架）和MLlib（机器学习库）都可以直接用于批量的数据分析，极大的方便了应用程序的开发和维护。<br>服务层可以利用SparkSQL等索引服务针对批量处理层的结果进行索引，接受外部查询请求，完成SQL查询任务。<br>速度层采用分布式的流处理平台Spark Streaming，作为批量处理层高延迟响应的补充，可实时计算数据完成处理。<br><img src="http://oa4pac8sx.bkt.clouddn.com/Lambda.png" alt="enter image description here"></p>
-<h2 id="平台整体架构"><a href="#平台整体架构" class="headerlink" title="平台整体架构"></a>平台整体架构</h2><p>重点关注Spark平台机器学习算法的实现，设计目标是应对高分辨率图像数据下机器学习任务的挑战，同时适应流数据的特点，基于Spark Streaming 框架上设计在线机器学习算法。<br>底层为Spark平台的基础设施，上层为设计和实现机器学习算法的框架层，其中部分算法依赖GraphX和Saprk Streaming框架，在框架层之上是Web服务接口层，主要封装各个算法的操作和调用接口，以Web Service的忌口方式暴露给外部使用，提供发送请求。<br><img src="http://oa4pac8sx.bkt.clouddn.com/architecture2.png" alt="enter image description here"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1275,7 +1283,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
