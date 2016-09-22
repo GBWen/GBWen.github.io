@@ -1,0 +1,656 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="分布式图片服务器大流量、高并发、海量存储使用负载均衡和分布式存储，能够在已定成都上解决并发访问量高和存储量大的问题。
+
+用户上传图片到web服务器，web服务器处理完图片，然后再由前段web服务器把图片post到图片服务器中，图片服务器接收post过来的图片，然后把图片写入到本地磁盘并返回对应的成功状态码。前端web服务器根据返回状态码决定对应的操作，如果成功的话处理生成各个尺寸的缩略图/打水印，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="近期资料整理">
+<meta property="og:url" content="http://yoursite.com/2016/09/22/近期资料整理/index.html">
+<meta property="og:site_name" content="GBW's Blog">
+<meta property="og:description" content="分布式图片服务器大流量、高并发、海量存储使用负载均衡和分布式存储，能够在已定成都上解决并发访问量高和存储量大的问题。
+
+用户上传图片到web服务器，web服务器处理完图片，然后再由前段web服务器把图片post到图片服务器中，图片服务器接收post过来的图片，然后把图片写入到本地磁盘并返回对应的成功状态码。前端web服务器根据返回状态码决定对应的操作，如果成功的话处理生成各个尺寸的缩略图/打水印，">
+<meta property="og:updated_time" content="2016-09-22T01:13:22.445Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="近期资料整理">
+<meta name="twitter:description" content="分布式图片服务器大流量、高并发、海量存储使用负载均衡和分布式存储，能够在已定成都上解决并发访问量高和存储量大的问题。
+
+用户上传图片到web服务器，web服务器处理完图片，然后再由前段web服务器把图片post到图片服务器中，图片服务器接收post过来的图片，然后把图片写入到本地磁盘并返回对应的成功状态码。前端web服务器根据返回状态码决定对应的操作，如果成功的话处理生成各个尺寸的缩略图/打水印，">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/22/近期资料整理/"/>
+
+  <title> 近期资料整理 | GBW's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GBW's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Write 1000 Lines a Day to Change My Life!  ٩( 'ω' )و</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                近期资料整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-22T07:55:01+08:00" content="2016-09-22">
+              2016-09-22
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="分布式图片服务器"><a href="#分布式图片服务器" class="headerlink" title="分布式图片服务器"></a>分布式图片服务器</h2><p>大流量、高并发、海量存储<br>使用负载均衡和分布式存储，能够在已定成都上解决并发访问量高和存储量大的问题。</p>
+<ol>
+<li>用户上传图片到web服务器，web服务器处理完图片，然后再由前段web服务器把图片post到图片服务器中，图片服务器接收post过来的图片，然后把图片写入到本地磁盘并返回对应的成功状态码。前端web服务器根据返回状态码决定对应的操作，如果成功的话处理生成各个尺寸的缩略图/打水印，把图片服务器对应的ID和对应的图片路径写入DB数据库。</li>
+<li>上传控制：只需要修改web服务器post到的目的图片服务器的ID就可以控制上传到哪台图片存储服务器，对应的图片存储服务器只需要安装nginx同时提供python或者php或者java服务并保存图片，也可以编写一个nginx扩展模块。</li>
+<li>用户访问流程：用户访问页面的时候，根据请求图片的URL到对应的图片服务器访问图片</li>
+</ol>
+<p>分布式存储的必要性：自动提供冗余，不需要我们去备份，担心数据安全，还有一点就是分布式存储动态扩容方便<br>上传和下载的分开处理：上传与下载分开，能保证不会因下载的压力影响图片的上传，而且还有一点，下载入口和上传入口的负载均衡策略也不同<br>使用cache做缓存: 分布式存储解决了存储安全问题，但性能问题还需要用cache去解决<br>使用一致性哈希做负载均衡<br>使用CDN分发和多域名访问入口: 采用多域名能够加快图片展示的速度</p>
+<h2 id="WEB-地图"><a href="#WEB-地图" class="headerlink" title="WEB 地图"></a>WEB 地图</h2><p>1.分级<br>经过行业里的长期发展，业内逐渐采用了分级代替了比例尺，一般使用0~18这样得分级数表示。<br>级数每增加1级，那么比例尺实际是变大2倍。 这个分级数一般用z表示<br>现在业内流行的投影方式是谷歌发明的 web墨卡托</p>
+<ol>
+<li>分块<br>现在第0级是256<em>256的地图图片，当第1级的时候就是512</em>512，每一级变为2倍。这样当到18级的时候，整个地图的分辨率是个天文数字，这样任意一台计算机都无法在瞬间完成下载，读取和显示。<br>实际上把某一级地图 完整下载也是没有意义的，因为我们的屏幕分辨率有限，超出屏幕的范围图片都是浪费。</li>
+<li>地图块的生成<br>电子地图的生成一般是地理几何数据（点，线，面）按照一定的规则， 配置不同的显示样式，预渲染成图片</li>
+<li>矢量地图块<br>现在我们用的手机地图 和 运行在chrome浏览器的地图 基本都不是栅格图片形式了，而是一块块的矢量数据。</li>
+</ol>
+<h2 id="Leaflet"><a href="#Leaflet" class="headerlink" title="Leaflet"></a>Leaflet</h2><p>一个开源的JavaScript地图库，支持绘制矢量图层</p>
+<p>矢量渲染对比栅格地图的好处，大概有以下几个方面：<br>数据更新更快更及时——由于地理数据是海量级别的，制作地图切片可能要消耗几个小时、几天甚至更长，而客户端矢量渲染理论上则可以支持实时更新。<br>释放客户端的缓存空间，节省流量——原来客户端需要缓存大量的地图切片，而矢量渲染则仅需要传输GeoJson字串，大大节省流量，这一点在移动端显得尤为重要。<br>客户端支持矢量编辑——以往，在客户端仅为图片展示，编辑数据是不可能的。</p>
+<h2 id="GIS"><a href="#GIS" class="headerlink" title="GIS"></a>GIS</h2><p>1：数据库层次的<br>Oracle 11g R2 RAC环境进行简单介绍<br>RAC相关原理<br>数据存储<br>ArcSDE在该环境下的部署<br>请参考：<a href="http://blog.csdn.net/linghe301/article/details/12997803" target="_blank" rel="external">http://blog.csdn.net/linghe301/article/details/12997803</a></p>
+<p>2：GIS服务器层次的<br>GIS服务器集群<br>请参考：<a href="http://blog.csdn.net/linghe301/article/details/13001035" target="_blank" rel="external">http://blog.csdn.net/linghe301/article/details/13001035</a><br>3：Web服务器层次的<br>负载均衡<br>WebAdapor<br>请参考：<a href="http://blog.csdn.net/linghe301/article/details/13001035" target="_blank" rel="external">http://blog.csdn.net/linghe301/article/details/13001035</a></p>
+<p>4：数据安全方面的<br>反向代理<br>防火墙<br>DNS</p>
+<p>请参考：<a href="http://blog.csdn.net/linghe301/article/details/13291855" target="_blank" rel="external">http://blog.csdn.net/linghe301/article/details/13291855</a></p>
+<h2 id="SWC"><a href="#SWC" class="headerlink" title="SWC"></a>SWC</h2><p>SWC File Format<br>The format of an SWC file is fairly simple. It is a text file consisting of a header with various fields beginning with a # character, and a series of three dimensional points containing an index, radius, type, and connectivity information. The lines in the text file representing points have the following layout.<br>n T x y z R P<br>n is an integer label that identifies the current point and increments by one from one line to the next.<br>T is an integer representing the type of neuronal segment, such as soma, axon, apical dendrite, etc. The standard accepted integer values are given below.<br>0 = undefined<br>1 = soma<br>2 = axon<br>3 = dendrite<br>4 = apical dendrite<br>5 = fork point<br>6 = end point<br>7 = custom<br>x, y, z gives the cartesian coordinates of each node.<br>R is the radius at that node.<br>P indicates the parent (the integer label) of the current point or -1 to indicate an origin (soma).<br>An example file generated by NeuronStudio containing just 8 points is shown below. Note that some of the fields of the header are missing values. At the time of this writing it is unclear whether this is allowed. NeuronStudio fills in SHRINKAGE_CORRECTION and SCALE with 1.0 in case a potential SWC reader uses these fields. </p>
+<p>1 1 14.566132 34.873772 7.857000 0.717830 -1<br>2 0 16.022520 33.760513 7.047000 0.463378 1<br>3 5 17.542000 32.604973 6.885001 0.638007 2<br>4 0 19.163984 32.022469 5.913000 0.602284 3<br>5 0 20.448090 30.822802 4.860000 0.436025 4<br>6 6 21.897903 28.881084 3.402000 0.471886 5<br>7 0 18.461960 30.289471 8.586000 0.447463 3<br>8 6 19.420759 28.730757 9.558000 0.496217 7</p>
+<h2 id="Neutube"><a href="#Neutube" class="headerlink" title="Neutube"></a>Neutube</h2><p>n  （Gn, Pn, Cn, Sn）, where （G n  xn, yn, zn, rn）<br>两个组件：SWC可视化和用户输入的响应，用户输入纠正识别错误。<br>3D视图是非常适合用于显示全球结构和2D视图提供密集的地方结构的精确推断<br>图像分析：该模块提供了一个神经元或神经元分支的自动跟踪，以允许用户获得神经元结构具有最小的相互作用。找到分支结点和端点。<br>软件结合2D / 3D可视化，半自动化的跟踪算法，以及灵活的编辑选项，以简化神经元的任务重建</p>
+<h2 id="Catmaid"><a href="#Catmaid" class="headerlink" title="Catmaid"></a>Catmaid</h2><p>CATMAID是图像的大量数据协作注释工具包。它被设计来导航，共享和协同注释生物标本的海量图像数据集。接口来源自GoogleMaps，同它的基本导航概念，增强，允许通过光学或物理切片显微技术获得的生物的三维图像数据的探索启发。该接口使地区的利益，通过书签，并通过多个已注册的数据集无缝共享同步导航。</p>
+<p>随着大量的生物图像数据集是不切实际的创造一个可持续的集中存储库。 CATMAID的一个独特功能是它的半分布式体系结构，其中所呈现的图像数据可以驻留在任何互联网访问的服务器上，但可在中央数据库容易交叉引用。这样，没有图像数据被复制和数据生产者保持对他们的形象完全控制。</p>
+<p>CATMAID是打算作为数据共享平台，采用高分辨率成像技术探测大样本生物学家。任何高通量，高含量成像项目如基因表达模式的屏幕将来自对数据共享和注解的接口中受益。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/19/9-20近期安排/" rel="next" title="9.20近期安排">
+                <i class="fa fa-chevron-left"></i> 9.20近期安排
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oa4pac8sx.bkt.clouddn.com/u=4284545010,775528643&fm=21&gp=0.jpg"
+               alt="GBW" />
+          <p class="site-author-name" itemprop="name">GBW</p>
+          <p class="site-description motion-element" itemprop="description">Scala,Spark</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GBWen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/u/5660562931" target="_blank" title="曾经博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  曾经博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://user.qzone.qq.com/376366210" target="_blank" title="QQ空间">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  QQ空间
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/guan-bo-wen-98" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式图片服务器"><span class="nav-number">1.</span> <span class="nav-text">分布式图片服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB-地图"><span class="nav-number">2.</span> <span class="nav-text">WEB 地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leaflet"><span class="nav-number">3.</span> <span class="nav-text">Leaflet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIS"><span class="nav-number">4.</span> <span class="nav-text">GIS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SWC"><span class="nav-number">5.</span> <span class="nav-text">SWC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Neutube"><span class="nav-number">6.</span> <span class="nav-text">Neutube</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Catmaid"><span class="nav-number">7.</span> <span class="nav-text">Catmaid</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GBW</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

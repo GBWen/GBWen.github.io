@@ -270,6 +270,104 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/16/7-16/" itemprop="url">
+                  7.16
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-16T19:14:47+08:00" content="2016-07-16">
+              2016-07-16
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Spark GraphX 是一个分布式图处理框架,它是基于 Spark 平台提供对图计算和图挖掘简洁<br>易用的而丰富的接口,极大的方便了对分布式图处理的需求。<br>这里写了个PageRank算法的例子<br>PageRank算法计算每一个网页的PageRank值，然后根据这个值的大小对网页的重要性进行排序。它的思想是模拟一个悠闲的上网者，上网者首先随机选择一个网页打开，然后在这个网页上呆了几分钟后，跳转到该网页所指向的链接，这样无所事事、漫无目的地在网页上跳来跳去，PageRank就是估计这个悠闲的上网者分布在各个网页上的概率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">import org.apache.log4j.&#123;Level, Logger&#125;</div><div class="line">import org.apache.spark.&#123;SparkContext, SparkConf&#125;</div><div class="line">import org.apache.spark.graphx._</div><div class="line"></div><div class="line">/**</div><div class="line">  * Created by gbw on 16-7-16.</div><div class="line">  */</div><div class="line"></div><div class="line"></div><div class="line">import org.apache.spark.rdd.RDD</div><div class="line">object PageRank</div><div class="line">&#123;</div><div class="line">	def main(args: Array[String])</div><div class="line">	&#123;</div><div class="line">		//屏蔽日志</div><div class="line">		Logger.getLogger(&quot;org.apache.spark&quot;).setLevel(Level.WARN)</div><div class="line">		Logger.getLogger(&quot;org.eclipse.jetty.server&quot;).setLevel(Level.OFF)</div><div class="line"></div><div class="line">		//设置运行环境</div><div class="line">		val conf = new SparkConf().setAppName(&quot;PageRank&quot;).setMaster(&quot;local&quot;)</div><div class="line">		val sc = new SparkContext(conf)</div><div class="line"></div><div class="line">		//读入数据文件</div><div class="line">		val articles: RDD[String] =</div><div class="line">			sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-vertices.txt&quot;)</div><div class="line">		val links: RDD[String] =</div><div class="line">			sc.textFile(&quot;/home/gbw/Sparkdata/graphx/graphx-wiki-edges.txt&quot;)</div><div class="line"></div><div class="line">		//装载顶点和边</div><div class="line">		val vertices = articles.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				val fields = line.split(&apos;\t&apos;)</div><div class="line">				(fields(0).toLong, fields(1))</div><div class="line">		&#125;</div><div class="line">		val edges = links.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				val fields = line.split(&apos;\t&apos;)</div><div class="line">				Edge(fields(0).toLong, fields(1).toLong, 0)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		//cache 操作</div><div class="line">		//val graph = Graph(vertices, edges, &quot;&quot;).persist(StorageLevel.MEMORY_ONLY_SER)</div><div class="line">		val graph = Graph(vertices, edges, &quot;&quot;).persist()</div><div class="line"></div><div class="line">		//测试</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		println(&quot;获取 5 个 triplet 信息&quot;)</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		graph.triplets.take(5).foreach(println(_))</div><div class="line"></div><div class="line">		//pageRank 算法里面的时候使用了 cache(),故前面 persist 的时候只能使用MEMORY_ONLY</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line">		println(&quot;PageRank 计算,获取最有价值的数据&quot;)</div><div class="line">		println(&quot;**********************************************************&quot;)</div><div class="line"></div><div class="line">		val prGraph = graph.pageRank(0.001).cache()</div><div class="line">		val titleAndPrGraph = graph.outerJoinVertices(prGraph.vertices)</div><div class="line">		&#123;</div><div class="line">			(v, title, rank) =&gt; (rank.getOrElse(0.0), title)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		titleAndPrGraph.vertices.top(10)</div><div class="line">		&#123;</div><div class="line">			Ordering.by((entry: (VertexId, (Double, String))) =&gt; entry._2._1)</div><div class="line">		&#125;.foreach(t =&gt; println(t._2._2 + &quot;: &quot; + t._2._1))</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/16/7-16/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/16/系统架构2/" itemprop="url">
                   系统架构2
                 </a>
@@ -1141,100 +1239,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/11/7-11/" itemprop="url">
-                  7.11
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-11T21:01:51+08:00" content="2016-07-11">
-              2016-07-11
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在git上面搭建博客gbwen.github.io<br>使用NexT主题，并排版美化好<br>SparkStreaming学习，但是视频里面的程序对着敲没跑通<br>整理一下，明天：<br>1.PeopleAge统计<br>        1)fileText<br>    2)HDFS<br>2.SparkStreaming<br>    1)Network<br>    2)HDFS<br>后天：<br>SparkStreaming图片处理<br>大后天：<br>MLlib<br>可以的话加入SparkStreaming</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1280,7 +1284,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
