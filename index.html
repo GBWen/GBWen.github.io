@@ -270,6 +270,110 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/23/9-23框架讨论我的想法/" itemprop="url">
+                  9.23框架讨论我的想法()
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-23T14:17:38+08:00" content="2016-09-23">
+              2016-09-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#分布式客户端-服务器的应用程序</p>
+<h2 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h2><p>前端运行在浏览器中，使用react框架，主要的JS编写并利用了几个外部库。使用HTML模板，大部分由JS动态生成。显示图像使用Leaflet开源的JS图片库，支持绘制矢量图层，与DVID的http api交互。提供后台计算模块的接口，用于神经元结构重建。在客户端支持矢量编辑，用于手动修正模型。</p>
+<h2 id="后端DVID"><a href="#后端DVID" class="headerlink" title="后端DVID"></a>后端DVID</h2><p>目前图片保存在leveldb中，但是鉴于图片规模，数据库承载太多图片会导致数据库容量和效率成为极大的瓶颈。<br>图片数据保存至硬盘（HDFS）<br>数据库中保存图片的存储路径，ID（HBase）</p>
+<h2 id="计算模块"><a href="#计算模块" class="headerlink" title="计算模块"></a>计算模块</h2><p>Spark集群，基于Neutube的计算服务系统支持自动分配计算资源对图像数据进行自动重建，产生神经元模型。</p>
+<h2 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h2><p>图片写请求由用户发起后，首先来到应用服务器排队等待进入HDFS存储系统，通过NameNode分配DataNode进行存储，图片写入过程中先确定写入Block，再确定Sequence File，系统将二者的ID组合命名为图片的系统内的名称。图片名,URL保存在HBase。</p>
+<h2 id="访问，下载"><a href="#访问，下载" class="headerlink" title="访问，下载"></a>访问，下载</h2><p>用户访问的时候根据请求图片的url找到图片在hdfs中的位置。</p>
+<h2 id="其他想法"><a href="#其他想法" class="headerlink" title="其他想法"></a>其他想法</h2><ol>
+<li>可以使用云存储的方案，既能解决各类存储、扩展、备灾的问题，又能做好CDN加速。</li>
+<li>缓存服务器：通过Nginx的Redis模块直接读取，通过调用Redis的API对数据进行写入。</li>
+<li>负载均衡：HAproxy采用RoundRobin负载均衡算法，分载前端用户请求的压力到每个web图片服务器上。 </li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/22/近期资料整理/" itemprop="url">
                   近期资料整理
                 </a>
@@ -1159,106 +1263,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/23/7-17-7-21/" itemprop="url">
-                  7.17-7.21
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-23T18:23:30+08:00" content="2016-07-23">
-              2016-07-23
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="DVID连接NeuTube"><a href="#DVID连接NeuTube" class="headerlink" title="DVID连接NeuTube"></a>DVID连接NeuTube</h1><p>注册自定义协议处理程序，新建neutube.desktop把参数“neptune://…”传给neutu.desktop，调用脚本neutu.sh，处理掉“neptune://”，取到实际图片的地址，传到neuTube里面打开</p>
-<p>1./usr/share/applications/defaults.list<br>增加x-scheme-handler/neutu=neutu.desktop</p>
-<p>2./usr/share/applications/新建neutudesktop</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Desktop Entry]</div><div class="line">Name = neutu</div><div class="line">Exec = neutu.sh %u</div><div class="line">Type = Application</div></pre></td></tr></table></figure>
-<p>3.neuTube 执行文件放到/usr/bin</p>
-<p>4./usr/新建neutu.sh</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">	STR = <span class="variable">$1</span></div><div class="line">	STR = <span class="variable">$&#123;STR##neutu:\/\/&#125;</span></div><div class="line">	neuTube <span class="variable">$STR</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1304,7 +1308,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
