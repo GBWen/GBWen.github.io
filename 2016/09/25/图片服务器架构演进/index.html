@@ -1,0 +1,645 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="单机时代初创时期由于时间紧迫，开发人员水平也很有限等原因。所以通常就直接在website文件所在的目录下，建立1个upload子目录，用于保存用户上传的图片文件。如果按业务再细分，可以在upload目录下再建立不同的子目录来区分。例如：upload\xx_upload\1等。在数据库表中保存的也是”upload/xx/1.jpg”这类相对路径。用户的访问方式如下：http://www.yourdo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图片服务器架构演进">
+<meta property="og:url" content="http://yoursite.com/2016/09/25/图片服务器架构演进/index.html">
+<meta property="og:site_name" content="GBW's Blog">
+<meta property="og:description" content="单机时代初创时期由于时间紧迫，开发人员水平也很有限等原因。所以通常就直接在website文件所在的目录下，建立1个upload子目录，用于保存用户上传的图片文件。如果按业务再细分，可以在upload目录下再建立不同的子目录来区分。例如：upload\xx_upload\1等。在数据库表中保存的也是”upload/xx/1.jpg”这类相对路径。用户的访问方式如下：http://www.yourdo">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/fuwuqi1.png">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/fuwuqi2.png">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/fuwuqi3.png">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/oss.png">
+<meta property="og:updated_time" content="2016-09-25T07:35:21.502Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图片服务器架构演进">
+<meta name="twitter:description" content="单机时代初创时期由于时间紧迫，开发人员水平也很有限等原因。所以通常就直接在website文件所在的目录下，建立1个upload子目录，用于保存用户上传的图片文件。如果按业务再细分，可以在upload目录下再建立不同的子目录来区分。例如：upload\xx_upload\1等。在数据库表中保存的也是”upload/xx/1.jpg”这类相对路径。用户的访问方式如下：http://www.yourdo">
+<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/fuwuqi1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/09/25/图片服务器架构演进/"/>
+
+  <title> 图片服务器架构演进 | GBW's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">GBW's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Write 1000 Lines a Day to Change My Life!  ٩( 'ω' )و</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                图片服务器架构演进
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T14:47:50+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="单机时代"><a href="#单机时代" class="headerlink" title="单机时代"></a>单机时代</h1><p>初创时期由于时间紧迫，开发人员水平也很有限等原因。所以通常就直接在website文件所在的目录下，建立1个upload子目录，用于保存用户上传的图片文件。如果按业务再细分，可以在upload目录下再建立不同的子目录来区分。例如：upload\xx_upload\1等。<br>在数据库表中保存的也是”upload/xx/1.jpg”这类相对路径。<br>用户的访问方式如下：<br><a href="http://www.yourdomain.com/upload/xx/1.jpg" target="_blank" rel="external">http://www.yourdomain.com/upload/xx/1.jpg</a><br>针对上述最原始的架构，主要面临着如下问题：</p>
+<ol>
+<li>随着upload目录中文件越来越多，所在分区（例如D盘）如果出现容量不足，则很难扩容。只能停机后更换更大容量的存储设备，再将旧数据导入。</li>
+<li>在部署新版本（部署新版本前通过需要备份）和日常备份website文件的时候，需要同时操作upload目录中的文件，如果考虑到访问量上升，后边部署由多台Web服务器组成的负载均衡集群，集群节点之间如果做好文件实时同步将是个难题。</li>
+</ol>
+<h1 id="集群时代"><a href="#集群时代" class="headerlink" title="集群时代"></a>集群时代</h1><h2 id="初始"><a href="#初始" class="headerlink" title="初始"></a>初始</h2><p><img src="http://oa4pac8sx.bkt.clouddn.com/fuwuqi1.png" alt="enter image description here"><br>如果不想在每台图片服务器同步所有图片，那么NFS是最简单的文件共享方式。NFS是个分布式的客户机/服务器文件系统，NFS的实质在于用户间计算机的共享，用户可以联结到共享计算机并象访问本地硬盘一样访问共享计算机上的文件。具体实现思路是：<br>1）所有前端web服务器都通过nfs挂载3台图片服务器export出来的目录，以接收web服务器写入的图片。然后[图片1]服务器挂载另外两台图片服务器的export目录到本地给apache对外提供访问。<br>2）用户上传图片<br>用户通过Internet访问页面提交上传请求post到web服务器，web服务器处理完图片后由web服务器拷贝到对应的mount本地目录。<br>3）用户访问图片<br>用户访问图片时，通过[图片1]这台图片服务器来读取相应mount目录里边的图片。<br>以上架构存在的问题：<br>1）性能：现有结构过度依赖nfs,当图片服务器的nfs服务器有问题时，可能影响到前端web服务器。NFS的问题主要是锁的问题. 很容易造成死锁, 只有硬件重启才能解决。尤其当图片达到一定的量级后，nfs会有严重的性能问题。<br>2）高可用：对外提供下载的图片服务器只有一台，容易出现单点故障。<br>3） 扩展性：图片服务器之间的依赖过多，而且横向扩展余地不够。<br>4） 存储：web服务器上传热点不可控，造成现有图片服务器空间占用不均衡。<br>5） 安全性：nfs方式对于拥有web服务器的密码的人来说，可以随意修改nfs里边的内容，安全级别不高。<br>当然图片服务器的图片同步可以不采用NFS,也可以采用ftp或rsync，采用ftp这样的话每个图片服务器就都保存一份图片的副本，也起到了备份的作用。但是缺点是将图片ftp到服务器比较耗时，如果使用异步方式去同步图片的话又会有延时，不过一般的小图片文件也还好了。使用rsync同步，当数据文件达到一定的量级后，每次rsync扫描会耗时很久也会带来一定的延时性。</p>
+<h2 id="发展阶段"><a href="#发展阶段" class="headerlink" title="发展阶段"></a>发展阶段</h2><p><img src="http://oa4pac8sx.bkt.clouddn.com/fuwuqi2.png" alt="enter image description here"><br>于是出现了上图图片服务器架构，出现了分布式的图片存储。<br>其实现的具体思路如下：<br>1）用户上传图片到web服务器后，web服务器处理完图片，然后再由前端web服务器把图片post到到[图片1]、[图片2]…[图片N]其中的一个，图片服务器接收到post过来的图片，然后把图片写入到本地磁盘并返回对应成功状态码。前端web服务器根据返回状态码决定对应操作，如果成功的话，处理生成各尺寸的缩略图、打水印，把图片服务器对应的ID和对应图片路径写入DB数据库。<br>2) 上传控制<br>我们需要调节上传时，只需要修改web服务器post到的目的图片服务器的ID，就可以控制上传到哪台图片存储服务器,对应的图片存储服务器只需要安装nginx同时提供一个python或者php服务接收并保存图片，如果不想不想开启python或者php服务，也可以编写一个nginx扩展模块。<br>3) 用户访问流程<br>用户访问页面的时候，根据请求图片的URL到对应图片服务器去访问图片。<br>如： <a href="http://www.yourdomain.com/image1.jpg" target="_blank" rel="external">http://www.yourdomain.com/image1.jpg</a></p>
+<p>此阶段的图片服务器架构，增加了负载均衡和分布式图片存储，能够在一定程度上解决并发访问量高和存储量大的问题。<br>以上图片服务架构设计消除了早期的NFS依赖以及单点问题，时能够均衡图片服务器的空间，提高了图片服务器的安全性等问题，但是又带来一个问题是图片服务器的横向扩展冗余问题。只想在普通的硬盘上存储，首先还是要考虑一下物理硬盘的实际处理能力。是 7200 转的还是 15000 转的，实际表现差别就很大。至于文件系统选择xfs、ext3、ext4还是reiserFs，需要做一些性能方面的测试，从官方的一些测试数据来看，reiserFs更适合存储一些小图片文件。创建文件系统的时候 Inode 问题也要加以考虑，选择合适大小的 inode size ，因为Linux 为每个文件分配一个称为索引节点的号码inode，可以将inode简单理解成一个指针，它永远指向本文件的具体存储位置。一个文件系统允许的inode节点数是有限的，如果文件数量太多，即使每个文件都是0字节的空文件，系统最终也会因为节点空间耗尽而不能再创建文件，因此需要在空间和速度上做取舍，构造合理的文件目录索引。</p>
+<h1 id="云存储阶段"><a href="#云存储阶段" class="headerlink" title="云存储阶段"></a>云存储阶段</h1><p><img src="http://oa4pac8sx.bkt.clouddn.com/fuwuqi3.png" alt="enter image description here"><br>图片服务早已成为一个互联网应用中占比很大的部分，对图片的处理能力也相应地变成企业和开发者的一项基本技能,图片的下载和上传速度显得更加重要，要想处理好图片，需要面对的三个主要问题是：大流量、高并发、海量存储。<br>阿里云存储服务(OpenStorageService，简称OSS)，是阿里云对外提供的海量，安全，低成本，高可靠的云存储服务。用户可以通过简单的 REST接口，在任何时间、任何地点上传和下载数据，也可以使用WEB页面对数据进行管理。同时，OSS提供Java、Python、PHP SDK，简化用户的编程。基于OSS，用户可以搭建出各种多媒体分享网站、网盘、个人企业数据备份等基于大规模数据的服务。在以下图片云存储主要以阿里云的云存储OSS为切入点介绍，下图为OSS云存储的简单架构示意图。<br><img src="http://oa4pac8sx.bkt.clouddn.com/oss.png" alt="enter image description here"><br>真正意义上的“云存储”，不是存储而是提供云服务，使用云存储服务的主要优势有以下几点：<br>1)用户无需了解存储设备的类型、接口、存储介质等。<br>2)无需关心数据的存储路径。<br>3)无需对存储设备进行管理、维护。<br>4)无需考虑数据备份和容灾<br>5)简单接入云存储，尽情享受存储服务。</p>
+<h1 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h1><p>大流量、高并发、海量存储</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="独立图片服务器"><a href="#独立图片服务器" class="headerlink" title="独立图片服务器"></a>独立图片服务器</h2><p>对于图片服务器来说IO无疑是消耗资源最为严重的，对于web应用来说需要将图片服务器做一定的分离，否则很可能因为图片服务器的IO负载导致应用崩溃。因此尤其对于大型网站和应用来说，非常有必要将图片服务器和应用服务器分离，构建独立的图片服务器集群。<br>Box.net非常受欢迎，国内的云存储目前比较不错的主要有七牛云存储和又拍云存储。</p>
+<h2 id="上传下载分而治之"><a href="#上传下载分而治之" class="headerlink" title="上传下载分而治之"></a>上传下载分而治之</h2><p>图片服务器的图片下载比例远远高于上传比例，业务逻辑的处理也区别明显，上传服器对图片重命名，记录入库信息，下载服务器对图片添加水印、修改尺寸之类的动态处理。从高可用的角度，我们能容忍部分图片下载失败，但绝不能有图片上传失败，因为上传失败，意味着数据的丢失。上传与下载分开，能保证不会因下载的压力影响图片的上传，而且还有一点，下载入口和上传入口的负载均衡策略也有所不同。上传需要经过Quota Server记录用户和图片的关系等逻辑处理，下载的逻辑处理如果绕过了前端缓存处理，穿透后端业务逻辑处理，需要从OSS获取图片路径信息。近期阿里云会推出基于CDN就近上传的功能，自动选择离用户最近的CDN节点，使得数据的上传下载速度均得到最优化。相较传统IDC，访问速度提升数倍。</p>
+<h2 id="分布式文件系统"><a href="#分布式文件系统" class="headerlink" title="分布式文件系统"></a>分布式文件系统</h2><p>用分布式存储有几个好处，分布式能自动提供冗余，不需要我们去备份，担心数据安全，在文件数量特别大的情况下，备份是一件很痛苦的事情，rsync扫一次可能是就是好几个小时，还有一点就是分布式存储动态扩容方便。当然在国内的其他一些文件系统里，TFS（<a href="http://code.taobao.org/p/tfs/src/）和FASTDFS也有一些用户，但是TFS的优势更是针对一些小文件存储，主要是淘宝在用。另外FASTDFS在并发高于300写入的情况下出现性能问题，稳定性不够友好。阿里云存储使用的是阿里云基于飞天5k平台自主研发的高可用，高可靠的分布式文件系统盘古。" target="_blank" rel="external">http://code.taobao.org/p/tfs/src/）和FASTDFS也有一些用户，但是TFS的优势更是针对一些小文件存储，主要是淘宝在用。另外FASTDFS在并发高于300写入的情况下出现性能问题，稳定性不够友好。阿里云存储使用的是阿里云基于飞天5k平台自主研发的高可用，高可靠的分布式文件系统盘古。</a><br>分布式文件系统盘古和Google的GFS类似，盘古的架构是Master-Slave主从架构，Master负责元数据管理，Sliave叫做Chunk Server，负责读写请求。其中Master是基于Paxos的多Master架构，一个Master死了之后，另外一个Master可以很快接过去，基本能够做到故障恢复在一分钟以内 。文件是按照分片存放，每个会分三个副本，放在不同的机架上，最后提供端到端的数据校验。</p>
+<h2 id="HAPROXY负载均衡"><a href="#HAPROXY负载均衡" class="headerlink" title="HAPROXY负载均衡"></a>HAPROXY负载均衡</h2><p>基于haproxy的自动hash架构 ,这是一种新的缓存架构，由nginx作为最前端，代理到缓存机器。 nginx后面是缓存组，由nginx经过url hash后将请求分到缓存机器。<br>这个架构方便纯squid缓存升级，可以在squid的机器上加装nginx。 nginx有缓存的功能，可以将一些访问量特大的链接直接缓存在nginx上，就不用经过多一次代理的请求，能够保证图片服务器的高可用、高性能。比如favicon.ico和网站的logo。 负载均衡负责OSS所有的请求的负载均衡，后台的http服务器故障会自动切换，从而保证了OSS的服务不间断。</p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>阿里云CDN服务是一个遍布全国的分布式缓存系统，能够将网站文件（如图片或JavaScript代码文件）缓存到全国多个城市机房中的服务器上，当一个用户访问你的网站时，会就近到靠近TA的城市的服务器上获取数据，这样最终用户访问你的服务速度会非常快。<br>阿里云CDN服务在全国部署超过100个节点，能提供给用户优良的网络加速效果。当网站业务突然爆发增长时，无需手忙脚乱地扩容网络带宽，使用CDN服务即可轻松应对。和OSS服务一样，使用CDN，需要先在aliyun.com网站上开通CDN服务。开通后，需要在网站上的管理中心创建你的distribution（即分发频道），每个distribution由两个必须的部分组成：distribution ID和源站地址。<br>使用阿里云OSS和CDN可以非常方便的针对每个bucket进行内容加速，因为每个bucket对应一个独立的二级域名，针对每个文件进行CDN删除，简单、经济地解决服务的存储和网络问题，毕竟大多数网站或应用的存储和网络带宽多半是被图片或视频消耗掉的。<br>从整个业界来看，最近这样的面向个人用户的云存储如国外的DropBox和</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/24/9-23架构讨论/" rel="next" title="9.23架构讨论">
+                <i class="fa fa-chevron-left"></i> 9.23架构讨论
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oa4pac8sx.bkt.clouddn.com/u=4284545010,775528643&fm=21&gp=0.jpg"
+               alt="GBW" />
+          <p class="site-author-name" itemprop="name">GBW</p>
+          <p class="site-description motion-element" itemprop="description">Scala,Spark</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/GBWen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.sina.com.cn/u/5660562931" target="_blank" title="曾经博客">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  曾经博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://user.qzone.qq.com/376366210" target="_blank" title="QQ空间">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  QQ空间
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/guan-bo-wen-98" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单机时代"><span class="nav-number">1.</span> <span class="nav-text">单机时代</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集群时代"><span class="nav-number">2.</span> <span class="nav-text">集群时代</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始"><span class="nav-number">2.1.</span> <span class="nav-text">初始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发展阶段"><span class="nav-number">2.2.</span> <span class="nav-text">发展阶段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#云存储阶段"><span class="nav-number">3.</span> <span class="nav-text">云存储阶段</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挑战"><span class="nav-number">4.</span> <span class="nav-text">挑战</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">5.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#独立图片服务器"><span class="nav-number">5.1.</span> <span class="nav-text">独立图片服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传下载分而治之"><span class="nav-number">5.2.</span> <span class="nav-text">上传下载分而治之</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式文件系统"><span class="nav-number">5.3.</span> <span class="nav-text">分布式文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HAPROXY负载均衡"><span class="nav-number">5.4.</span> <span class="nav-text">HAPROXY负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN"><span class="nav-number">5.5.</span> <span class="nav-text">CDN</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">GBW</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
