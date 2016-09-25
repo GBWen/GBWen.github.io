@@ -106,7 +106,7 @@
 <meta property="og:description" content="Google是伸缩性的王者。Google一直的目标就是构建高性能高伸缩性的基础组织来支持它们的产品。
 平台Linux大量语言：Python，Java，C++
 状态在2006年大约有450,000台廉价服务器在2005年Google索引了80亿Web页面，现在没有人知道数目目前在Google有超过200个GFS集群。一个集群可以有1000或者甚至5000台机器。成千上万的机器从运行着50000000">
-<meta property="og:updated_time" content="2016-09-25T09:52:40.113Z">
+<meta property="og:updated_time" content="2016-09-25T09:54:37.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="google架构">
 <meta name="twitter:description" content="Google是伸缩性的王者。Google一直的目标就是构建高性能高伸缩性的基础组织来支持它们的产品。
@@ -325,7 +325,7 @@
 <p>其他<br>1，迅速更改而不是等待QA<br>2，库是构建程序的卓越方式<br>3，一些程序作为服务提供<br>4，一个基础组织处理程序的版本，这样它们可以发布而不用害怕会破坏什么东西</p>
 <p>Google将来的方向<br>1，支持地理位置分布的集群<br>2，为所有数据创建一个单独的全局名字空间。当前的数据由集群分离<br>3，更多和更好的自动化数据迁移和计算<br>4，解决当使用网络划分来做广阔区域的备份时的一致性问题(例如保持服务即使一个集群离线维护或由于一些损耗问题)</p>
 <p>学到的东西<br>1，基础组织是有竞争性的优势。特别是对Google而言。Google可以很快很廉价的推出新服务，并且伸缩性其他人很难达到。许多公司采取完全不同的方式。许多公司认为基础组织开销太大。Google认为自己是一个系统工程公司，这是一个新的看待软件构建的方式<br>2，跨越多个数据中心仍然是一个未解决的问题。大部分网站都是一个或者最多两个数据中心。我们不得不承认怎样在一些数据中心之间完整的分布网站是很需要技巧的<br>3，如果你自己没有时间从零开始重新构建所有这些基础组织你可以看看Hadoop。Hadoop是这里很多同样的主意的一个开源实现<br>4，平台的一个优点是初级开发人员可以在平台的基础上快速并且放心的创建健全的程序。如果每个项目都需要发明同样的分布式基础组织的轮子，那么你将陷入困境因为知道怎样完成这项工作的人相对较少<br>5，协同工作不一直是掷骰子。通过让系统中的所有部分一起工作则一个部分的改进将帮助所有的部分。改进文件系统则每个人从中受益而且是透明的。如果每个项目使用不同的文件系统则在整个堆栈中享受不到持续增加的改进<br>6，构建自管理系统让你没必要让系统关机。这允许你更容易在服务器之间平衡资源、动态添加更大的容量、让机器离线和优雅的处理升级<br>7，创建可进化的基础组织，并行的执行消耗时间的操作并采取较好的方案<br>8，不要忽略学院。学院有许多没有转变为产品的好主意。Most of what Google has done has prior art, just not prior large scale deployment.<br>9，考虑压缩。当你有许多CPU而IO有限时压缩是一个好的选择。 </p>
-<p><a href="http://highscalability.com/google-architecture/" target="_blank" rel="external">http://highscalability.com/google-architecture/</a></p>
+<p>原文：<a href="http://highscalability.com/google-architecture/" target="_blank" rel="external">http://highscalability.com/google-architecture/</a></p>
 
       
     </div>
