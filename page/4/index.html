@@ -290,6 +290,200 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/10/7-9/" itemprop="url">
+                  7.9
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-10T08:18:27+08:00" content="2016-07-10">
+              2016-07-10
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>学习 Spark生态系统介绍，Spark整体概述与Spark编程模型<br>本地./spark-shell 在shell运行spark语句OK<br>但是idea 打包成jar 怎么也不对 Fuck！</p>
+<p>例子：<br>1.数组map(2*<em>)全部翻倍，filter(</em>&gt;6)筛选&gt;6的</p>
+<pre><code>val filterRRdd = sc.parallelize(List(1,2,3,4,5,6,7,8,9)).map(2*_).filter(_&gt;6).collect
+</code></pre><p>2.union合并，但是join笛卡尔积</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">val rdd1 = sc.parallelize(List((&apos;a&apos;,1),(&apos;a&apos;,2)))</div><div class="line">val rdd2 = sc.parallelize(List((&apos;b&apos;,1),(&apos;b&apos;,2)))</div><div class="line">val result = rdd1 union rdd2</div><div class="line">result.collect</div><div class="line">//Array[(Char, Int)] = Array((a,1), (a,2), (b,1), (b,2))</div></pre></td></tr></table></figure>
+<p>3.WordCount</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(&quot;/home/gbw/myspark/1/data.txt&quot;) </div><div class="line">rdd.cache</div><div class="line">rdd.count</div><div class="line">//  Long = 13</div><div class="line"></div><div class="line">val wordCount = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).reduceByKey(_+_)</div><div class="line">wordCount.collect</div><div class="line">//Array[(String, Int)] = Array((b,5), (h,14), (&quot;&quot;,1), (n,10), (f,14), (j,19), (r,5), (s,5), (e,5), (a,10), (k,10), (y,5), (u,5), (g,9), (m,4))</div><div class="line">wordCount.saveAsTextFile(&quot;/home/gbw/myspark/1/out&quot;)</div><div class="line">//输出到文件</div><div class="line"></div><div class="line">val wordCount2 = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).groupByKey()</div><div class="line">//Array[(String, Iterable[Int])] = Array((b,CompactBuffer(1, 1, 1, 1, 1)), (h,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (&quot;&quot;,CompactBuffer(1)), (n,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (f,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (j,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (r,CompactBuffer(1, 1, 1, 1, 1)), (s,CompactBuffer(1, 1, 1, 1, 1)), (e,CompactBuffer(1, 1, 1, 1, 1)), (a,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (k,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (y,CompactBuffer(1, 1, 1, 1, 1)), (u,CompactBuffer(1, 1, 1, 1, 1)), (g,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1)), (m,CompactBuffer(1, 1, 1, 1)))</div><div class="line"></div><div class="line">val wordCount = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).reduceByKey(_+_).map(x =&gt; (x._2,x._1)).sortByKey(false).map(x=&gt;(x._2,x._1))</div><div class="line">//Array[(String, Int)] = Array((j,19), (h,14), (f,14), (n,10), (a,10), (k,10), (g,9), (b,5), (r,5), (s,5), (e,5), (y,5), (u,5), (m,4), (&quot;&quot;,1))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/08/7-8/" itemprop="url">
+                  7.8
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-08T17:17:44+08:00" content="2016-07-08">
+              2016-07-08
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Scala基本语法看完<br>想用finagle，sbt安装好编译源代码不过<br>想用play framework没有很好的教程<br>直接上Spark<br>单机Hadoop，Spark搭建<br>写WordCount小程序<br>Spark确实吊，函数式编程还需要多熟悉</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/07/7-7/" itemprop="url">
                   7.7
                 </a>
@@ -598,7 +792,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">35</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

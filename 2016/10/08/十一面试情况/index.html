@@ -96,19 +96,16 @@
 
 
 
-<meta name="description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
-Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
+<meta name="description" content="十一期间，一共4家公司发来了面试邀请。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="7.26-7.28">
-<meta property="og:url" content="http://yoursite.com/2016/07/28/7-26-7-28/index.html">
+<meta property="og:title" content="十一面试情况">
+<meta property="og:url" content="http://yoursite.com/2016/10/08/十一面试情况/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
-Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
-<meta property="og:updated_time" content="2016-07-28T06:10:38.317Z">
+<meta property="og:description" content="十一期间，一共4家公司发来了面试邀请。">
+<meta property="og:updated_time" content="2016-10-08T03:48:01.596Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7.26-7.28">
-<meta name="twitter:description" content="学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作学习使用Spark streaming进行实时的统计计算下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。
-Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spar">
+<meta name="twitter:title" content="十一面试情况">
+<meta name="twitter:description" content="十一期间，一共4家公司发来了面试邀请。">
 
 
 
@@ -129,9 +126,9 @@ Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/07/28/7-26-7-28/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/10/08/十一面试情况/"/>
 
-  <title> 7.26-7.28 | GBW's Blog </title>
+  <title> 十一面试情况 | GBW's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -291,7 +288,7 @@ Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib
             
             
               
-                7.26-7.28
+                十一面试情况
               
             
           </h1>
@@ -303,8 +300,8 @@ Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-28T13:52:02+08:00" content="2016-07-28">
-              2016-07-28
+            <time itemprop="dateCreated" datetime="2016-10-08T11:31:19+08:00" content="2016-10-08">
+              2016-10-08
             </time>
           </span>
 
@@ -331,11 +328,8 @@ Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib
       
 
       
-        <p>学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作<br>学习使用Spark streaming进行实时的统计计算<br>下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。</p>
-<p>Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spark2.0的新特性，试着把写的子程序整合在Spark2.0的版本上，做好后我再写一个总结报告发给老师。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">Row</span>, <span class="type">SQLContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.types.&#123;<span class="type">StringType</span>, <span class="type">StructField</span>, <span class="type">StructType</span>, _&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">ImageSQL</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//private val schemaString = "id,gender,height"</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">val</span> schemaString = <span class="string">"name,type,size"</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">1</span>)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">"Usage:ImageData filePath"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Image Data Test"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDataRDD</span> = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> sqlCtx = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line">		<span class="comment">// this is used to implicitly convert an RDD to a DataFrame.</span></div><div class="line">		<span class="keyword">import</span> sqlCtx.implicits._</div><div class="line">		<span class="keyword">val</span> schemaArray = schemaString.split(<span class="string">","</span>)</div><div class="line">		<span class="keyword">val</span> schema = <span class="type">StructType</span>(schemaArray.map(fieldName =&gt; <span class="type">StructField</span>(fieldName, <span class="type">StringType</span>, <span class="literal">true</span>)))</div><div class="line">		<span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = <span class="type">ImageDataRDD</span>.map(_.split(<span class="string">" "</span>)).map(eachRow =&gt; <span class="type">Row</span>(eachRow(<span class="number">0</span>), eachRow(<span class="number">1</span>), eachRow(<span class="number">2</span>)))</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDF</span> = sqlCtx.createDataFrame(rowRDD, schema)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.registerTempTable(<span class="string">"Image"</span>)</div><div class="line">		<span class="keyword">val</span> lagerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb: "</span> + lagerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #1&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="keyword">val</span> bmpLargerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100 and type='bmp'"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb and type is bmp: "</span> + bmpLargerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #2&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.groupBy(<span class="type">ImageDF</span>(<span class="string">"type"</span>)).count().show()</div><div class="line">		println(<span class="string">"Image Count Grouped By type"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #3&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.filter(<span class="type">ImageDF</span>(<span class="string">"type"</span>).equalTo(<span class="string">"png"</span>)).filter(<span class="type">ImageDF</span>(<span class="string">"size"</span>) &gt; <span class="number">200</span>).show()</div><div class="line">		println(<span class="string">"Png which size is more than 200"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #4&gt;"</span>)</div><div class="line"></div><div class="line"><span class="comment">//		ImageDF.sort($"size".desc).take(2).foreach &#123; row =&gt; println(row(0) + "," + row(1) + "," + row(2)) &#125;</span></div><div class="line"><span class="comment">//		println("Sorted the Image by size in descend order,Show top 2 Image")</span></div><div class="line"><span class="comment">//		println("&lt;Display #5&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("jpg")).agg(Map("size" -&gt; "avg")).show()</span></div><div class="line"><span class="comment">//		println("The Average size for jpg")</span></div><div class="line"><span class="comment">//		println("&lt;Display #6&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("bmp")).agg("size" -&gt; "max").show()</span></div><div class="line"><span class="comment">//		println("The Max size of bmp:")</span></div><div class="line"><span class="comment">//		println("&lt;Display #7&gt;")</span></div><div class="line"></div><div class="line">		println(<span class="string">"All the statistics actions are finished on structured Image data."</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>spark-submit运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-submit --class ImageSQL --master spark://localhost:7077 /home/gbw/Sparkjar/SparkSQLImage.jar hdfs://localhost:9000/gbw/input/Images/Image.txt</div></pre></td></tr></table></figure>
+        <p>十一期间，一共4家公司发来了面试邀请。<br><a id="more"></a></p>
+<p>1.天瑞地安，查了下网上都说是骗子公司，打折招聘的旗号办培训班，很失望，纠结了下，没去。<br>2.听物科技，我没投简历，他邀请我去面试，查了下公司，做的东西我不感兴趣，没去。<br>3.朗目达，做大数据系统研发工程师，是我喜欢的，去面了下，这是我找工作第一次面试。<br>先问我数据结构，链表翻转，我想了3min答了上来。<br>问了问我排序问题，快排和归并排序的时间效率问题，答得还行，再后来说了下java自带排序拿什么实现的，我说不知道，c++是快排，他告诉我java是归并排序。<br>问我数据库，我说我做B+树，问我B+树和B树区别，不知道。<br>再说操作系统，问我线程和进程的区别，我说共享变量的区别，OK。<br>问我有什么问题，我说能录不，他说后面还有没面完的，过两天告诉我。<br>最后问我要多少钱，我说无所谓，够吃饭来回就行。<br>4.水马环保，名字太挫，hr声音难听，又远，没去。</p>
 
       
     </div>
@@ -361,16 +355,16 @@ Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/26/7-24-7-25/" rel="next" title="7.24-7.25">
-                <i class="fa fa-chevron-left"></i> 7.24-7.25
+              <a href="/2016/10/08/蛋疼的海投/" rel="next" title="蛋疼的海投">
+                <i class="fa fa-chevron-left"></i> 蛋疼的海投
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/31/Plan-8月/" rel="prev" title="Plan(8月)">
-                Plan(8月) <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/08/准备去参加的校招笔试/" rel="prev" title="准备去参加的校招笔试">
+                准备去参加的校招笔试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
