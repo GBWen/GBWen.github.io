@@ -96,16 +96,27 @@
 
 
 
-<meta name="description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。">
+<meta name="description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。
+TCP/IP四层模型TCP/IP是一组协议的代名词，它还包括许多协议，组成了TCP/IP协议簇。TCP/IP协议簇分为四层，IP位于协议簇的第二层(对应OSI的第三层)，TCP位于协议簇的第三层(对应OSI的第四层)。
+TCP/IP通讯协议采用了4层的层级结构，每一层都呼叫它的下一层所提供的网络来完成自己的需求。这4层分别为： 
+应用层：应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔试不会的知识点">
 <meta property="og:url" content="http://yoursite.com/2016/10/10/笔试不会的知识点/index.html">
 <meta property="og:site_name" content="GBW's Blog">
-<meta property="og:description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。">
-<meta property="og:updated_time" content="2016-10-11T00:48:15.984Z">
+<meta property="og:description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。
+TCP/IP四层模型TCP/IP是一组协议的代名词，它还包括许多协议，组成了TCP/IP协议簇。TCP/IP协议簇分为四层，IP位于协议簇的第二层(对应OSI的第三层)，TCP位于协议簇的第三层(对应OSI的第四层)。
+TCP/IP通讯协议采用了4层的层级结构，每一层都呼叫它的下一层所提供的网络来完成自己的需求。这4层分别为： 
+应用层：应用">
+<meta property="og:image" content="http://oa4pac8sx.bkt.clouddn.com/paixusuanfa.jpg">
+<meta property="og:updated_time" content="2016-10-11T01:30:55.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="笔试不会的知识点">
-<meta name="twitter:description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。">
+<meta name="twitter:description" content="笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。
+TCP/IP四层模型TCP/IP是一组协议的代名词，它还包括许多协议，组成了TCP/IP协议簇。TCP/IP协议簇分为四层，IP位于协议簇的第二层(对应OSI的第三层)，TCP位于协议簇的第三层(对应OSI的第四层)。
+TCP/IP通讯协议采用了4层的层级结构，每一层都呼叫它的下一层所提供的网络来完成自己的需求。这4层分别为： 
+应用层：应用">
+<meta name="twitter:image" content="http://oa4pac8sx.bkt.clouddn.com/paixusuanfa.jpg">
 
 
 
@@ -328,7 +339,7 @@
       
 
       
-        <p>笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。<br><a id="more"></a></p>
+        <p>笔试的时候发现很多基本的知识都忘了，很蠢，在此总结下。</p>
 <h2 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h2><p>TCP/IP是一组协议的代名词，它还包括许多协议，组成了TCP/IP协议簇。TCP/IP协议簇分为四层，IP位于协议簇的第二层(对应OSI的第三层)，TCP位于协议簇的第三层(对应OSI的第四层)。</p>
 <p>TCP/IP通讯协议采用了4层的层级结构，每一层都呼叫它的下一层所提供的网络来完成自己的需求。这4层分别为： </p>
 <p>应用层：应用程序间沟通的层，如简单电子邮件传输（SMTP）、文件传输协议（FTP）、网络远程访问协议（Telnet）等。 </p>
@@ -342,6 +353,19 @@
 <p>画树求法：<br>第一步，根据前序遍历的特点，我们知道根结点为G<br>第二步，观察中序遍历ADEFGHMZ。其中root节点G左侧的ADEF必然是root的左子树，G右侧的HMZ必然是root的右子树。<br> 第三步，观察左子树ADEF，左子树的中的根节点必然是大树的root的leftchild。在前序遍历中，大树的root的leftchild位于root之后，所以左子树的根节点为D。<br>第四步，同样的道理，root的右子树节点HMZ中的根节点也可以通过前序遍历求得。在前序遍历中，一定是先把root和root的所有左子树节点遍历完之后才会遍历右子树，并且遍历的左子树的第一个节点就是左子树的根节点。同理，遍历的右子树的第一个节点就是右子树的根节点。<br>第五步，观察发现，上面的过程是递归的。先找到当前树的根节点，然后划分为左子树，右子树，然后进入左子树重复上面的过程，然后进入右子树重复上面的过程。最后就可以还原一棵树了。该步递归的过程可以简洁表达如下：</p>
 <p>1 确定根,确定左子树，确定右子树。<br>2 在左子树中递归。<br>3 在右子树中递归。<br>4 打印当前根。</p>
 <h2 id="排序算法以及时间效率"><a href="#排序算法以及时间效率" class="headerlink" title="排序算法以及时间效率"></a>排序算法以及时间效率</h2><p><a href="http://blog.csdn.net/hguisu/article/details/7776068" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/7776068</a></p>
+<p><a href="http://ai-coder.com/batbus/html/blog_detail.php?blog_id=202" target="_blank" rel="external">http://ai-coder.com/batbus/html/blog_detail.php?blog_id=202</a></p>
+<p><img src="http://oa4pac8sx.bkt.clouddn.com/paixusuanfa.jpg" alt="enter image description here"></p>
+<h2 id="排序算法整体分析"><a href="#排序算法整体分析" class="headerlink" title="排序算法整体分析"></a>排序算法整体分析</h2><p>冒泡排序、插入排序、希尔排序以及快速排序对数据的有序性比较敏感，尤其是冒泡排序和插入排序；</p>
+<p>选择排序不关心表的初始次序，它的最坏情况的排序时间与其最佳情况区别不大，其比较次数为 n(n-1)/2。</p>
+<p>冒泡排序在最优情况下只需要经过n-1次比较即可得出结果（即对于完全正序的表），最坏情况下也要进行n(n-1)/2 次比较，与选择排序的比较次数相同，但数据交换的次数要多余选择排序，因为选择排序的数据交换次数顶多为 n-1，而冒泡排序最坏情况下的数据交换n(n-1)/2 。</p>
+<p>插入排序在最好的情况下有最少的比较次数 ，但是它在元素移动方面效率非常低下，因为它只与毗邻的元素进行比较，效率比较低。</p>
+<p>希尔排序实际上是预处理阶段优化后的插入排序，一般而言，在数据量比较大时，希尔排序要明显优于插入排序。</p>
+<p>快速排序采用的分治的思想，用递归的方法，将原问题分解成若干规模较小但与原问题相似的子问题进行求解。快速算法的平均时间复杂度为O(nlogn) ，平均而言，快速排序是基于关键字比较的内部排序算法中速度最快者；但是由于快速排序采用的是递归的方法，因此当序列的长度比较大时，对系统栈占用会比较多。快速算法尤其适用于随机序列的排序。</p>
+<p>因此，平均而言，对于一般的随机序列顺序表而言，上述几种排序算法性能从低到高的顺序大致为：冒泡排序、插入排序、选择排序、希尔排序、快速排序。但这个优劣顺序不是绝对的，在不同的情况下，甚至可能出现完全的性能逆转。</p>
+<p>对于序列初始状态基本有正序，可选择对有序性较敏感的如插入排序、冒泡排序、选择排序等方法</p>
+<p>对于序列长度 比较大的随机序列，应选择平均时间复杂度较小的快速排序方法。</p>
+<p>各种排序算法都有各自的优缺点，适应于不同的应用环境，因此在选择一种排序算法解决实际问题之前，应当先分析实际问题的类型，再结合各算法的特点，选择一种合适的算法。</p>
+<h2 id="C-指针"><a href="#C-指针" class="headerlink" title="C++指针"></a>C++指针</h2><p><a href="http://ai-coder.com/batbus/html/blog_detail.php?blog_id=195" target="_blank" rel="external">http://ai-coder.com/batbus/html/blog_detail.php?blog_id=195</a></p>
 
       
     </div>
@@ -518,7 +542,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP四层模型"><span class="nav-number">1.</span> <span class="nav-text">TCP/IP四层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI七层模型"><span class="nav-number">2.</span> <span class="nav-text">OSI七层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的遍历"><span class="nav-number">3.</span> <span class="nav-text">树的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法以及时间效率"><span class="nav-number">4.</span> <span class="nav-text">排序算法以及时间效率</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP四层模型"><span class="nav-number">1.</span> <span class="nav-text">TCP/IP四层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI七层模型"><span class="nav-number">2.</span> <span class="nav-text">OSI七层模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树的遍历"><span class="nav-number">3.</span> <span class="nav-text">树的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法以及时间效率"><span class="nav-number">4.</span> <span class="nav-text">排序算法以及时间效率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法整体分析"><span class="nav-number">5.</span> <span class="nav-text">排序算法整体分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-指针"><span class="nav-number">6.</span> <span class="nav-text">C++指针</span></a></li></ol></div>
             
           </div>
         </section>
