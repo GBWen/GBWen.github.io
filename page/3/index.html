@@ -290,6 +290,106 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/23/7-17-7-21/" itemprop="url">
+                  7.17-7.21
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-23T18:23:30+08:00" content="2016-07-23">
+              2016-07-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="DVID连接NeuTube"><a href="#DVID连接NeuTube" class="headerlink" title="DVID连接NeuTube"></a>DVID连接NeuTube</h1><p>注册自定义协议处理程序，新建neutube.desktop把参数“neptune://…”传给neutu.desktop，调用脚本neutu.sh，处理掉“neptune://”，取到实际图片的地址，传到neuTube里面打开</p>
+<p>1./usr/share/applications/defaults.list<br>增加x-scheme-handler/neutu=neutu.desktop</p>
+<p>2./usr/share/applications/新建neutudesktop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Desktop Entry]</div><div class="line">Name = neutu</div><div class="line">Exec = neutu.sh %u</div><div class="line">Type = Application</div></pre></td></tr></table></figure>
+<p>3.neuTube 执行文件放到/usr/bin</p>
+<p>4./usr/新建neutu.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line">	STR = <span class="variable">$1</span></div><div class="line">	STR = <span class="variable">$&#123;STR##neutu:\/\/&#125;</span></div><div class="line">	neuTube <span class="variable">$STR</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/16/7-16/" itemprop="url">
                   7.16
                 </a>
@@ -1162,103 +1262,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/12/7-12/" itemprop="url">
-                  7.12
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T10:17:31+08:00" content="2016-07-12">
-              2016-07-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>统计平均年龄<br>首先生成数据：Gen.scala<br>生成1000000个人的0-99年龄<br>每一行 i + rand(100)<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">  * Created by gbw on 16-7-10.</div><div class="line">  */</span></div><div class="line"><span class="keyword">import</span> java.io.<span class="type">FileWriter</span></div><div class="line"><span class="keyword">import</span> java.io.<span class="type">File</span></div><div class="line"><span class="keyword">import</span> scala.util.<span class="type">Random</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">val</span> writer = <span class="keyword">new</span> <span class="type">FileWriter</span>(<span class="keyword">new</span> <span class="type">File</span>(<span class="string">"/home/gbw/sample_age_data.txt"</span>),<span class="literal">false</span>)</div><div class="line">		<span class="keyword">val</span> rand = <span class="keyword">new</span> <span class="type">Random</span>()</div><div class="line">		<span class="keyword">for</span> ( i &lt;- <span class="number">1</span> to <span class="number">1000000</span>)</div><div class="line">		&#123;</div><div class="line">			writer.write( i + <span class="string">" "</span> + rand.nextInt(<span class="number">100</span>))</div><div class="line">			writer.write(<span class="type">System</span>.getProperty(<span class="string">"line.separator"</span>))</div><div class="line">		&#125;</div><div class="line">		writer.flush()</div><div class="line">		writer.close()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Spark计算平均年龄</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/12/7-12/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1304,7 +1307,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">38</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
