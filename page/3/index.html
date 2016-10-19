@@ -290,6 +290,100 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/23/7-22-7-23/" itemprop="url">
+                  7.22-7.23
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-23T18:25:42+08:00" content="2016-07-23">
+              2016-07-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>学习<a href="https://github.com/Unknwon/go-fundamental-programming" target="_blank" rel="external">https://github.com/Unknwon/go-fundamental-programming</a><br>golang的基本语法</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/23/7-17-7-21/" itemprop="url">
                   7.17-7.21
                 </a>
@@ -1164,104 +1258,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/12/7-12(2)/" itemprop="url">
-                  7-12(2)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T13:31:00+08:00" content="2016-07-12">
-              2016-07-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>SparkStreaming<br>终于搞定了Demo<br>生成模拟数据流，监听指定端口，当建立链接时，每秒向该端口发送数据流</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.&#123;<span class="type">PrintWriter</span>&#125;</div><div class="line"><span class="keyword">import</span> java.net.<span class="type">ServerSocket</span></div><div class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">Gen</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="comment">// 定义随机获取整数的方法</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span></span>(length: <span class="type">Int</span>) =</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">import</span> java.util.<span class="type">Random</span></div><div class="line">		<span class="keyword">val</span> rdm = <span class="keyword">new</span> <span class="type">Random</span></div><div class="line">		rdm.nextInt(length)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line"></div><div class="line">		<span class="comment">// 调用该模拟器需要三个参数，分为为文件路径、端口号和间隔时间（单位：毫秒）</span></div><div class="line">		<span class="keyword">if</span> (args.length != <span class="number">3</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="type">System</span>.err.println(<span class="string">"Usage: &lt;filename&gt; &lt;port&gt; &lt;millisecond&gt;"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// 获取指定文件总的行数</span></div><div class="line">		<span class="keyword">val</span> filename = args(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> lines = <span class="type">Source</span>.fromFile(filename).getLines.toList</div><div class="line">		<span class="keyword">val</span> filerow = lines.length</div><div class="line"></div><div class="line">		<span class="comment">// 指定监听某端口，当外部程序请求时建立连接</span></div><div class="line">		<span class="keyword">val</span> listener = <span class="keyword">new</span> <span class="type">ServerSocket</span>(args(<span class="number">1</span>).toInt)</div><div class="line">		<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">val</span> socket = listener.accept()</div><div class="line">			<span class="keyword">new</span> <span class="type">Thread</span>()</div><div class="line">			&#123;</div><div class="line">				<span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">run</span> </span>=</div><div class="line">				&#123;</div><div class="line">					println(<span class="string">"Got client connected from: "</span> + socket.getInetAddress)</div><div class="line">					<span class="keyword">val</span> out = <span class="keyword">new</span> <span class="type">PrintWriter</span>(socket.getOutputStream, <span class="literal">true</span>)</div><div class="line">					<span class="keyword">while</span> (<span class="literal">true</span>)</div><div class="line">					&#123;</div><div class="line">						<span class="type">Thread</span>.sleep(args(<span class="number">2</span>).toLong)</div><div class="line">						<span class="comment">// 当该端口接受请求时，随机获取某行数据发送给对方</span></div><div class="line">						<span class="keyword">val</span> content = lines(index(filerow))</div><div class="line">						println(content)</div><div class="line">						out.write(content + '\n')</div><div class="line">						out.flush()</div><div class="line">					&#125;</div><div class="line">					socket.close()</div><div class="line">				&#125;</div><div class="line">			&#125;.start()</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/12/7-12(2)/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1307,7 +1303,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
