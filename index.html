@@ -334,10 +334,11 @@
       
         
           
-            <p>想做点什么，想了一晚上，把我最喜欢的小说《亵渎》弄一下吧，就叫它”亵渎补奸计划“。</p>
-<p> 1.使用python模块jieba做分词<br> 2.词频统计<br> 3.得到小说中出现概率最高的几个词<br> 4.搭配另一个模块WorldCloud，作词云标签<br> 5.载入一张图片，把它做成二维数组，载入词云<br> 6.以××照片为词云背景</p>
-<p><a href="http://www.zhihu.com/question/28975391" target="_blank" rel="external">http://www.zhihu.com/question/28975391</a></p>
-<p>还可以做<br>1.电影相关<br>2.招聘信息相关<br>3.数据挖掘比赛</p>
+            <h2 id="10-18"><a href="#10-18" class="headerlink" title="10.18"></a>10.18</h2><p>想做点什么，想了一晚上，把我最喜欢的小说《亵渎》弄一下吧，就叫它”亵渎补奸计划”。<br></p>
+<p>1.使用python模块jieba做分词<br><br>2.词频统计<br><br>3.得到小说中出现概率最高的几个词<br><br>4.搭配另一个模块WorldCloud，作词云标签<br><br>5.载入一张图片，把它做成二维数组，载入词云<br><br>6.以××照片为词云背景<br></p>
+<h2 id="10-19"><a href="#10-19" class="headerlink" title="10.19"></a>10.19</h2><p>把第一章跑了一下：</p>
+<p>WordCount 统计词频，打印到文本中<br><img src="http://oa4pac8sx.bkt.clouddn.com/2016-10-19%2021:25:38%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"><br>WordCloudSquere 输出词云<br><img src="http://oa4pac8sx.bkt.clouddn.com/Squere.jpg" alt="enter image description here"><br>WordCloudPlot 以图片位模板输出<br><img src="http://oa4pac8sx.bkt.clouddn.com/Mask.jpg" alt="enter image description here"></p>
+<h2 id="10-20"><a href="#10-20" class="headerlink" title="10.20"></a>10.20</h2><p>但是仅仅这样存在一些问题，很多没有用的词占了很大部分：<br><img src="http://oa4pac8sx.bkt.clouddn.com/12333.png" alt="enter image description here"><br>所以词性做一下筛选，使用jieba.posseg，第一次去掉很多词性，发现还是有很多不科学的东东，然后保留名词动词，会，说。。。很多也应该去掉，最后干脆只保留名词，效果还不错。<br><img src="http://oa4pac8sx.bkt.clouddn.com/12334.png" alt="enter image description here"><br><img src="http://oa4pac8sx.bkt.clouddn.com/Squere2.jpg" alt="enter image description here"><br><img src="http://oa4pac8sx.bkt.clouddn.com/Mask2.jpg" alt="enter image description here"></p>
 
           
         
