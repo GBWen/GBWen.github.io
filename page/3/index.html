@@ -290,6 +290,104 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/28/7-26-7-28/" itemprop="url">
+                  7.26-7.28
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-28T13:52:02+08:00" content="2016-07-28">
+              2016-07-28
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作<br>学习使用Spark streaming进行实时的统计计算<br>下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。</p>
+<p>Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spark2.0的新特性，试着把写的子程序整合在Spark2.0的版本上，做好后我再写一个总结报告发给老师。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">Row</span>, <span class="type">SQLContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.types.&#123;<span class="type">StringType</span>, <span class="type">StructField</span>, <span class="type">StructType</span>, _&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">ImageSQL</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//private val schemaString = "id,gender,height"</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">val</span> schemaString = <span class="string">"name,type,size"</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">1</span>)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">"Usage:ImageData filePath"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Image Data Test"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDataRDD</span> = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> sqlCtx = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line">		<span class="comment">// this is used to implicitly convert an RDD to a DataFrame.</span></div><div class="line">		<span class="keyword">import</span> sqlCtx.implicits._</div><div class="line">		<span class="keyword">val</span> schemaArray = schemaString.split(<span class="string">","</span>)</div><div class="line">		<span class="keyword">val</span> schema = <span class="type">StructType</span>(schemaArray.map(fieldName =&gt; <span class="type">StructField</span>(fieldName, <span class="type">StringType</span>, <span class="literal">true</span>)))</div><div class="line">		<span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = <span class="type">ImageDataRDD</span>.map(_.split(<span class="string">" "</span>)).map(eachRow =&gt; <span class="type">Row</span>(eachRow(<span class="number">0</span>), eachRow(<span class="number">1</span>), eachRow(<span class="number">2</span>)))</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDF</span> = sqlCtx.createDataFrame(rowRDD, schema)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.registerTempTable(<span class="string">"Image"</span>)</div><div class="line">		<span class="keyword">val</span> lagerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb: "</span> + lagerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #1&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="keyword">val</span> bmpLargerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100 and type='bmp'"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb and type is bmp: "</span> + bmpLargerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #2&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.groupBy(<span class="type">ImageDF</span>(<span class="string">"type"</span>)).count().show()</div><div class="line">		println(<span class="string">"Image Count Grouped By type"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #3&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.filter(<span class="type">ImageDF</span>(<span class="string">"type"</span>).equalTo(<span class="string">"png"</span>)).filter(<span class="type">ImageDF</span>(<span class="string">"size"</span>) &gt; <span class="number">200</span>).show()</div><div class="line">		println(<span class="string">"Png which size is more than 200"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #4&gt;"</span>)</div><div class="line"></div><div class="line"><span class="comment">//		ImageDF.sort($"size".desc).take(2).foreach &#123; row =&gt; println(row(0) + "," + row(1) + "," + row(2)) &#125;</span></div><div class="line"><span class="comment">//		println("Sorted the Image by size in descend order,Show top 2 Image")</span></div><div class="line"><span class="comment">//		println("&lt;Display #5&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("jpg")).agg(Map("size" -&gt; "avg")).show()</span></div><div class="line"><span class="comment">//		println("The Average size for jpg")</span></div><div class="line"><span class="comment">//		println("&lt;Display #6&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("bmp")).agg("size" -&gt; "max").show()</span></div><div class="line"><span class="comment">//		println("The Max size of bmp:")</span></div><div class="line"><span class="comment">//		println("&lt;Display #7&gt;")</span></div><div class="line"></div><div class="line">		println(<span class="string">"All the statistics actions are finished on structured Image data."</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>spark-submit运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-submit --class ImageSQL --master spark://localhost:7077 /home/gbw/Sparkjar/SparkSQLImage.jar hdfs://localhost:9000/gbw/input/Images/Image.txt</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/26/7-24-7-25/" itemprop="url">
                   7.24-7.25
                 </a>
@@ -1175,105 +1273,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/12/Plan2/" itemprop="url">
-                  Plan2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-12T16:04:47+08:00" content="2016-07-12">
-              2016-07-12
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>那么现在搞定了：<br>1.HDFS 读数据<br>2.SparkStreaming时时计算<br>3.Spark MLlib Kmeans算法<br>那么要把它们连在一起做时时图像处理，可以考虑做视频，要做的是：<br>1.HDFS读取图片<br>2.Kmean图像处理<br>3.写回（HDFS，或者本地<br>4..加入SparkStreaming，模拟时时产生图片，做计算，写回<br>5.搞一个前端交互<br>6.SparkStreaming监控前端，做图像处理，搞定！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1314,7 +1318,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1398,8 +1402,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

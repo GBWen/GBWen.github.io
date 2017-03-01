@@ -290,6 +290,111 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/25/google架构/" itemprop="url">
+                  google架构
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T17:51:36+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Google是伸缩性的王者。Google一直的目标就是构建高性能高伸缩性的基础组织来支持它们的产品。</p>
+<p>平台<br>Linux<br>大量语言：Python，Java，C++</p>
+<p>状态<br>在2006年大约有450,000台廉价服务器<br>在2005年Google索引了80亿Web页面，现在没有人知道数目<br>目前在Google有超过200个GFS集群。一个集群可以有1000或者甚至5000台机器。成千上万的机器从运行着5000000000000000字节存储的GFS集群获取数据，集群总的读写吞吐量可以达到每秒40兆字节<br>目前在Google有6000个MapReduce程序，而且每个月都写成百个新程序<br>BigTable伸缩存储几十亿的URL，几百千千兆的卫星图片和几亿用户的参数选择</p>
+<p>堆栈<br>Google形象化它们的基础组织为三层架构：<br>1，产品：搜索，广告，email，地图，视频，聊天，博客<br>2，分布式系统基础组织：GFS，MapReduce和BigTable<br>3，计算平台：一群不同的数据中心里的机器<br>4，确保公司里的人们部署起来开销很小<br>5，花费更多的钱在避免丢失日志数据的硬件上，其他类型的数据则花费较少</p>
+<p>可信赖的存储机制GFS(Google File System)<br>1，可信赖的伸缩性存储是任何程序的核心需求。GFS就是Google的核心存储平台<br>2，Google File System - 大型分布式结构化日志文件系统，Google在里面扔了大量的数据<br>3，为什么构建GFS而不是利用已有的东西？因为可以自己控制一切并且这个平台与别的不一样，Google需要：<br>-跨数据中心的高可靠性<br>-成千上万的网络节点的伸缩性<br>-大读写带宽的需求<br>-支持大块的数据，可能为上千兆字节<br>-高效的跨节点操作分发来减少瓶颈<br>4，系统有Master和Chunk服务器<br>-Master服务器在不同的数据文件里保持元数据。数据以64MB为单位存储在文件系统中。客户端与Master服务器交流来在文件上做元数据操作并且找到包含用户需要数据的那些Chunk服务器<br>-Chunk服务器在硬盘上存储实际数据。每个Chunk服务器跨越3个不同的Chunk服务器备份以创建冗余来避免服务器崩溃。一旦被Master服务器指明，客户端程序就会直接从Chunk服务器读取文件<br>6，一个上线的新程序可以使用已有的GFS集群或者可以制作自己的GFS集群<br>7，关键点在于有足够的基础组织来让人们对自己的程序有所选择，GFS可以调整来适应个别程序的需求</p>
+<p>使用MapReduce来处理数据<br>1，现在你已经有了一个很好的存储系统，你该怎样处理如此多的数据呢？比如你有许多TB的数据存储在1000台机器上。数据库不能伸缩或者伸缩到这种级别花费极大，这就是MapReduce出现的原因<br>2，MapReduce是一个处理和生成大量数据集的编程模型和相关实现。用户指定一个map方法来处理一个键/值对来生成一个中间的键/值对，还有一个reduce方法来合并所有关联到同样的中间键的中间值。许多真实世界的任务都可以使用这种模型来表现。以这种风格来写的程序会自动并行的在一个大量机器的集群里运行。运行时系统照顾输入数据划分、程序在机器集之间执行的调度、机器失败处理和必需的内部机器交流等细节。这允许程序员没有多少并行和分布式系统的经验就可以很容易使用一个大型分布式系统资源<br>3，为什么使用MapReduce？<br>-跨越大量机器分割任务的好方式<br>-处理机器失败<br>-可以与不同类型的程序工作，例如搜索和广告。几乎任何程序都有map和reduce类型的操作。你可以预先计算有用的数据、查询字数统计、对TB的数据排序等等<br>4，MapReduce系统有三种不同类型的服务器<br>-Master服务器分配用户任务到Map和Reduce服务器。它也跟踪任务的状态<br>-Map服务器接收用户输入并在其基础上处理map操作。结果写入中间文件<br>-Reduce服务器接收Map服务器产生的中间文件并在其基础上处理reduce操作<br>5，例如，你想在所有Web页面里的字数。你将存储在GFS里的所有页面抛入MapReduce。这将在成千上万台机器上同时进行并且所有的调整、工作调度、失败处理和数据传输将自动完成<br>-步骤类似于：GFS -&gt; Map -&gt; Shuffle -&gt; Reduction -&gt; Store Results back into GFS<br>-在MapReduce里一个map操作将一些数据映射到另一个中，产生一个键值对，在我们的例子里就是字和字数<br>-Shuffling操作聚集键类型<br>-Reduction操作计算所有键值对的综合并产生最终的结果<br>6，Google索引操作管道有大约20个不同的map和reduction。<br>7，程序可以非常小，如20到50行代码<br>8，一个问题是掉队者。掉队者是一个比其他程序慢的计算，它阻塞了其他程序。掉队者可能因为缓慢的IO或者临时的CPU不能使用而发生。解决方案是运行多个同样的计算并且当一个完成后杀死所有其他的<br>9，数据在Map和Reduce服务器之间传输时被压缩了。这可以节省带宽和I/O。</p>
+<p>在BigTable里存储结构化数据<br>1，BigTable是一个大伸缩性、错误容忍、自管理的系统，它包含千千兆的内存和1000000000000000的存储。它可以每秒钟处理百万的读写<br>2，BigTable是一个构建于GFS之上的分布式哈希机制。它不是关系型数据库。它不支持join或者SQL类型查询<br>3，它提供查询机制来通过键访问结构化数据。GFS存储存储不透明的数据而许多程序需求有结构化数据<br>4，商业数据库不能达到这种级别的伸缩性并且不能在成千上万台机器上工作<br>5，通过控制它们自己的低级存储系统Google得到更多的控制权来改进它们的系统。例如，如果它们想让跨数据中心的操作更简单这个特性，它们可以内建它<br>6，系统运行时机器可以自由的增删而整个系统保持工作<br>7，每个数据条目存储在一个格子里，它可以通过一个行key和列key或者时间戳来访问<br>8，每一行存储在一个或多个tablet中。一个tablet是一个64KB块的数据序列并且格式为SSTable<br>9，BigTable有三种类型的服务器：<br>-Master服务器分配tablet服务器，它跟踪tablet在哪里并且如果需要则重新分配任务<br>-Tablet服务器为tablet处理读写请求。当tablet超过大小限制(通常是100MB-200MB)时它们拆开tablet。当一个Tablet服务器失败时，则100个Tablet服务器各自挑选一个新的tablet然后系统恢复。<br>-Lock服务器形成一个分布式锁服务。像打开一个tablet来写、Master调整和访问控制检查等都需要互斥<br>10，一个locality组可以用来在物理上将相关的数据存储在一起来得到更好的locality选择<br>11，tablet尽可能的缓存在RAM里</p>
+<p>硬件<br>1，当你有很多机器时你怎样组织它们来使得使用和花费有效？<br>2，使用非常廉价的硬件<br>3，A 1,000-fold computer power increase can be had for a 33 times lower cost if you you use a failure-prone infrastructure rather than an infrastructure built on highly reliable components. You must build reliability on top of unreliability for this strategy to work.<br>4，Linux，in-house rack design，PC主板，低端存储<br>5，Price per wattage on performance basis isn’t getting better. Have huge power and cooling issues<br>6，使用一些collocation和Google自己的数据中心</p>
+<p>其他<br>1，迅速更改而不是等待QA<br>2，库是构建程序的卓越方式<br>3，一些程序作为服务提供<br>4，一个基础组织处理程序的版本，这样它们可以发布而不用害怕会破坏什么东西</p>
+<p>Google将来的方向<br>1，支持地理位置分布的集群<br>2，为所有数据创建一个单独的全局名字空间。当前的数据由集群分离<br>3，更多和更好的自动化数据迁移和计算<br>4，解决当使用网络划分来做广阔区域的备份时的一致性问题(例如保持服务即使一个集群离线维护或由于一些损耗问题)</p>
+<p>学到的东西<br>1，基础组织是有竞争性的优势。特别是对Google而言。Google可以很快很廉价的推出新服务，并且伸缩性其他人很难达到。许多公司采取完全不同的方式。许多公司认为基础组织开销太大。Google认为自己是一个系统工程公司，这是一个新的看待软件构建的方式<br>2，跨越多个数据中心仍然是一个未解决的问题。大部分网站都是一个或者最多两个数据中心。我们不得不承认怎样在一些数据中心之间完整的分布网站是很需要技巧的<br>3，如果你自己没有时间从零开始重新构建所有这些基础组织你可以看看Hadoop。Hadoop是这里很多同样的主意的一个开源实现<br>4，平台的一个优点是初级开发人员可以在平台的基础上快速并且放心的创建健全的程序。如果每个项目都需要发明同样的分布式基础组织的轮子，那么你将陷入困境因为知道怎样完成这项工作的人相对较少<br>5，协同工作不一直是掷骰子。通过让系统中的所有部分一起工作则一个部分的改进将帮助所有的部分。改进文件系统则每个人从中受益而且是透明的。如果每个项目使用不同的文件系统则在整个堆栈中享受不到持续增加的改进<br>6，构建自管理系统让你没必要让系统关机。这允许你更容易在服务器之间平衡资源、动态添加更大的容量、让机器离线和优雅的处理升级<br>7，创建可进化的基础组织，并行的执行消耗时间的操作并采取较好的方案<br>8，不要忽略学院。学院有许多没有转变为产品的好主意。Most of what Google has done has prior art, just not prior large scale deployment.<br>9，考虑压缩。当你有许多CPU而IO有限时压缩是一个好的选择。 </p>
+<p>原文：<a href="http://highscalability.com/google-architecture/" target="_blank" rel="external">http://highscalability.com/google-architecture/</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/25/图片服务器架构演进/" itemprop="url">
                   图片服务器架构演进
                 </a>
@@ -1187,109 +1292,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/28/7-26-7-28/" itemprop="url">
-                  7.26-7.28
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-28T13:52:02+08:00" content="2016-07-28">
-              2016-07-28
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习使用Spark SQL读取hdfs中图片的信息，做一些查询和统计的操作<br>学习使用Spark streaming进行实时的统计计算<br>下一步就是把这些spark的东西整合在一起，写好web服务的接口，和前端交，还有就是把它连接到dvid上。</p>
-<p>Spark2.0 前几天刚刚正式发布，据说大幅度提升SQL的功能，MLlib以支持Dataframe的API为主要的API，过两天我就回家了，回家后再试试Spark2.0的新特性，试着把写的子程序整合在Spark2.0的版本上，做好后我再写一个总结报告发给老师。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">Row</span>, <span class="type">SQLContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.types.&#123;<span class="type">StringType</span>, <span class="type">StructField</span>, <span class="type">StructType</span>, _&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">ImageSQL</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">//private val schemaString = "id,gender,height"</span></div><div class="line">	<span class="keyword">private</span> <span class="keyword">val</span> schemaString = <span class="string">"name,type,size"</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (args.length &lt; <span class="number">1</span>)</div><div class="line">		&#123;</div><div class="line">			println(<span class="string">"Usage:ImageData filePath"</span>)</div><div class="line">			<span class="type">System</span>.exit(<span class="number">1</span>)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Image Data Test"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDataRDD</span> = sc.textFile(args(<span class="number">0</span>))</div><div class="line">		<span class="keyword">val</span> sqlCtx = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line">		<span class="comment">// this is used to implicitly convert an RDD to a DataFrame.</span></div><div class="line">		<span class="keyword">import</span> sqlCtx.implicits._</div><div class="line">		<span class="keyword">val</span> schemaArray = schemaString.split(<span class="string">","</span>)</div><div class="line">		<span class="keyword">val</span> schema = <span class="type">StructType</span>(schemaArray.map(fieldName =&gt; <span class="type">StructField</span>(fieldName, <span class="type">StringType</span>, <span class="literal">true</span>)))</div><div class="line">		<span class="keyword">val</span> rowRDD: <span class="type">RDD</span>[<span class="type">Row</span>] = <span class="type">ImageDataRDD</span>.map(_.split(<span class="string">" "</span>)).map(eachRow =&gt; <span class="type">Row</span>(eachRow(<span class="number">0</span>), eachRow(<span class="number">1</span>), eachRow(<span class="number">2</span>)))</div><div class="line">		<span class="keyword">val</span> <span class="type">ImageDF</span> = sqlCtx.createDataFrame(rowRDD, schema)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.registerTempTable(<span class="string">"Image"</span>)</div><div class="line">		<span class="keyword">val</span> lagerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb: "</span> + lagerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #1&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="keyword">val</span> bmpLargerThan100 = sqlCtx.sql(<span class="string">"select name,type,size from Image where size &gt; 100 and type='bmp'"</span>)</div><div class="line">		println(<span class="string">"Num of Image &gt; 100kb and type is bmp: "</span> + bmpLargerThan100.count())</div><div class="line">		println(<span class="string">"&lt;Display #2&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.groupBy(<span class="type">ImageDF</span>(<span class="string">"type"</span>)).count().show()</div><div class="line">		println(<span class="string">"Image Count Grouped By type"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #3&gt;"</span>)</div><div class="line"></div><div class="line">		<span class="type">ImageDF</span>.filter(<span class="type">ImageDF</span>(<span class="string">"type"</span>).equalTo(<span class="string">"png"</span>)).filter(<span class="type">ImageDF</span>(<span class="string">"size"</span>) &gt; <span class="number">200</span>).show()</div><div class="line">		println(<span class="string">"Png which size is more than 200"</span>)</div><div class="line">		println(<span class="string">"&lt;Display #4&gt;"</span>)</div><div class="line"></div><div class="line"><span class="comment">//		ImageDF.sort($"size".desc).take(2).foreach &#123; row =&gt; println(row(0) + "," + row(1) + "," + row(2)) &#125;</span></div><div class="line"><span class="comment">//		println("Sorted the Image by size in descend order,Show top 2 Image")</span></div><div class="line"><span class="comment">//		println("&lt;Display #5&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("jpg")).agg(Map("size" -&gt; "avg")).show()</span></div><div class="line"><span class="comment">//		println("The Average size for jpg")</span></div><div class="line"><span class="comment">//		println("&lt;Display #6&gt;")</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//		ImageDF.filter(ImageDF("type").equalTo("bmp")).agg("size" -&gt; "max").show()</span></div><div class="line"><span class="comment">//		println("The Max size of bmp:")</span></div><div class="line"><span class="comment">//		println("&lt;Display #7&gt;")</span></div><div class="line"></div><div class="line">		println(<span class="string">"All the statistics actions are finished on structured Image data."</span>)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>spark-submit运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./spark-submit --class ImageSQL --master spark://localhost:7077 /home/gbw/Sparkjar/SparkSQLImage.jar hdfs://localhost:9000/gbw/input/Images/Image.txt</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1330,7 +1337,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1414,8 +1421,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
