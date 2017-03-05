@@ -290,6 +290,101 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/15/7-15/" itemprop="url">
+                  7-15
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-15T18:46:38+08:00" content="2016-07-15">
+              2016-07-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>新买的键盘到了，有瑕疵，但敲着确实爽<br>今天写了个MLlib的线性回归，很简单的例子</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LinearRegressionWithSGD</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LabeledPoint</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-15.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">LinearRegression</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//屏蔽log</span></div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">ERROR</span>)</div><div class="line"></div><div class="line">		<span class="comment">//设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Linear Regression"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">//Load and parse the data</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Regression/lpsa.data"</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> parts = line.split(',')</div><div class="line">				<span class="type">LabeledPoint</span>(parts(<span class="number">0</span>).toDouble,<span class="type">Vectors</span>.dense(parts(<span class="number">1</span>).split(' ').map(_.toDouble)))</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">//Building the model</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">100</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">LinearRegressionWithSGD</span>.train(parsedData, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">//Evaluate model on training examples and compute training error</span></div><div class="line">		<span class="keyword">val</span> valuesAndPreds = parsedData.map</div><div class="line">		&#123;</div><div class="line">			point =&gt;</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(point.features)</div><div class="line">				(point.label, prediction)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> <span class="type">MSE</span> = valuesAndPreds.map</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">case</span>(v,p) =&gt;</div><div class="line">				math.pow((v-p),<span class="number">2</span>)</div><div class="line">		&#125;.reduce(_+_)/valuesAndPreds.count</div><div class="line">		println(<span class="string">"Training Mean Squared Error = "</span> +<span class="type">MSE</span>)</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/14/系统架构-1/" itemprop="url">
                   系统架构(1) 
                 </a>
@@ -1160,106 +1255,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/10/7-9/" itemprop="url">
-                  7.9
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-10T08:18:27+08:00" content="2016-07-10">
-              2016-07-10
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习 Spark生态系统介绍，Spark整体概述与Spark编程模型<br>本地./spark-shell 在shell运行spark语句OK<br>但是idea 打包成jar 怎么也不对 Fuck！</p>
-<p>例子：<br>1.数组map(2*<em>)全部翻倍，filter(</em>&gt;6)筛选&gt;6的</p>
-<pre><code>val filterRRdd = sc.parallelize(List(1,2,3,4,5,6,7,8,9)).map(2*_).filter(_&gt;6).collect
-</code></pre><p>2.union合并，但是join笛卡尔积</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">val rdd1 = sc.parallelize(List((&apos;a&apos;,1),(&apos;a&apos;,2)))</div><div class="line">val rdd2 = sc.parallelize(List((&apos;b&apos;,1),(&apos;b&apos;,2)))</div><div class="line">val result = rdd1 union rdd2</div><div class="line">result.collect</div><div class="line">//Array[(Char, Int)] = Array((a,1), (a,2), (b,1), (b,2))</div></pre></td></tr></table></figure>
-<p>3.WordCount</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(&quot;/home/gbw/myspark/1/data.txt&quot;) </div><div class="line">rdd.cache</div><div class="line">rdd.count</div><div class="line">//  Long = 13</div><div class="line"></div><div class="line">val wordCount = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).reduceByKey(_+_)</div><div class="line">wordCount.collect</div><div class="line">//Array[(String, Int)] = Array((b,5), (h,14), (&quot;&quot;,1), (n,10), (f,14), (j,19), (r,5), (s,5), (e,5), (a,10), (k,10), (y,5), (u,5), (g,9), (m,4))</div><div class="line">wordCount.saveAsTextFile(&quot;/home/gbw/myspark/1/out&quot;)</div><div class="line">//输出到文件</div><div class="line"></div><div class="line">val wordCount2 = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).groupByKey()</div><div class="line">//Array[(String, Iterable[Int])] = Array((b,CompactBuffer(1, 1, 1, 1, 1)), (h,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (&quot;&quot;,CompactBuffer(1)), (n,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (f,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (j,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (r,CompactBuffer(1, 1, 1, 1, 1)), (s,CompactBuffer(1, 1, 1, 1, 1)), (e,CompactBuffer(1, 1, 1, 1, 1)), (a,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (k,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)), (y,CompactBuffer(1, 1, 1, 1, 1)), (u,CompactBuffer(1, 1, 1, 1, 1)), (g,CompactBuffer(1, 1, 1, 1, 1, 1, 1, 1, 1)), (m,CompactBuffer(1, 1, 1, 1)))</div><div class="line"></div><div class="line">val wordCount = rdd.flatMap(_.split(&apos; &apos;)).map((_,1)).reduceByKey(_+_).map(x =&gt; (x._2,x._1)).sortByKey(false).map(x=&gt;(x._2,x._1))</div><div class="line">//Array[(String, Int)] = Array((j,19), (h,14), (f,14), (n,10), (a,10), (k,10), (g,9), (b,5), (r,5), (s,5), (e,5), (y,5), (u,5), (m,4), (&quot;&quot;,1))</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1305,7 +1300,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

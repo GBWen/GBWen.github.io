@@ -290,6 +290,101 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/15/DVID-问题解决/" itemprop="url">
+                  DVID 问题解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-15T08:59:48+08:00" content="2016-09-15">
+              2016-09-15
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用<a href="https://github.com/janelia-flyem/dvid-console" target="_blank" rel="external">https://github.com/janelia-flyem/dvid-console</a>    1.14.4版本的dvid-console就没有之前所说的问题了，可以看到这次使用了新的显示插件Leaflet，而不是OpenSeaDragon，Leaflet网站<a href="http://leafletjs.com/，an" target="_blank" rel="external">http://leafletjs.com/，an</a> open-source JavaScript library for mobile-friendly interactive maps，但是dvid-console这个版本没有缩放功能，先放下吧，先进行下去</p>
+<p><img src="http://oa4pac8sx.bkt.clouddn.com/2016-09-15%2009:23:18%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt="enter image description here"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/13/Spark-架构实现/" itemprop="url">
                   Spark 架构实现
                 </a>
@@ -1155,101 +1250,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/15/7-15/" itemprop="url">
-                  7-15
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-15T18:46:38+08:00" content="2016-07-15">
-              2016-07-15
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>新买的键盘到了，有瑕疵，但敲着确实爽<br>今天写了个MLlib的线性回归，很简单的例子</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.log4j.&#123;<span class="type">Level</span>, <span class="type">Logger</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkContext</span>, <span class="type">SparkConf</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LinearRegressionWithSGD</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.regression.<span class="type">LabeledPoint</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.mllib.linalg.<span class="type">Vectors</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">  * Created by gbw on 16-7-15.</div><div class="line">  */</div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">LinearRegression</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> =</div><div class="line">	&#123;</div><div class="line">		<span class="comment">//屏蔽log</span></div><div class="line">		<span class="type">Logger</span>.getLogger(<span class="string">"org.apache.spark"</span>).setLevel(<span class="type">Level</span>.<span class="type">ERROR</span>)</div><div class="line"></div><div class="line">		<span class="comment">//设置运行环境</span></div><div class="line">		<span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Linear Regression"</span>).setMaster(<span class="string">"local[4]"</span>)</div><div class="line">		<span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line"></div><div class="line">		<span class="comment">//Load and parse the data</span></div><div class="line">		<span class="keyword">val</span> data = sc.textFile(<span class="string">"/home/gbw/Sparkdata/Regression/lpsa.data"</span>)</div><div class="line">		<span class="keyword">val</span> parsedData = data.map</div><div class="line">		&#123;</div><div class="line">			line =&gt;</div><div class="line">				<span class="keyword">val</span> parts = line.split(',')</div><div class="line">				<span class="type">LabeledPoint</span>(parts(<span class="number">0</span>).toDouble,<span class="type">Vectors</span>.dense(parts(<span class="number">1</span>).split(' ').map(_.toDouble)))</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">//Building the model</span></div><div class="line">		<span class="keyword">val</span> numIterations = <span class="number">100</span></div><div class="line">		<span class="keyword">val</span> model = <span class="type">LinearRegressionWithSGD</span>.train(parsedData, numIterations)</div><div class="line"></div><div class="line">		<span class="comment">//Evaluate model on training examples and compute training error</span></div><div class="line">		<span class="keyword">val</span> valuesAndPreds = parsedData.map</div><div class="line">		&#123;</div><div class="line">			point =&gt;</div><div class="line">				<span class="keyword">val</span> prediction = model.predict(point.features)</div><div class="line">				(point.label, prediction)</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">val</span> <span class="type">MSE</span> = valuesAndPreds.map</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">case</span>(v,p) =&gt;</div><div class="line">				math.pow((v-p),<span class="number">2</span>)</div><div class="line">		&#125;.reduce(_+_)/valuesAndPreds.count</div><div class="line">		println(<span class="string">"Training Mean Squared Error = "</span> +<span class="type">MSE</span>)</div><div class="line"></div><div class="line">		sc.stop()</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1295,7 +1295,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
